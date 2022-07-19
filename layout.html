@@ -9,7 +9,7 @@
 
         *{box-sizing: border-box;}
         footer{position:fixed; bottom: 0; left: 50%;}
-        section{display: -webkit-flex; display:flex; display: -webkit-flex;}
+        section{display: -webkit-flex; display:flex;}
         header{background-color:cadetblue ; text-align: center;}
         section article{margin-left: 25%; margin-right: 25%;}
 
@@ -17,6 +17,11 @@
         display: none;}
         section article:target {
         display: block;
+        }
+        div article img{
+            margin-left: 20%; margin-bottom: 5%;  
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26), 0 6px 20px 0 rgba(0, 0, 0, 0.227);
+
         }
     
     </style>
@@ -33,7 +38,7 @@
     </header>
 
     <section>
-        <nav>
+        <nav style="background-color:rgb(117, 181, 183);padding-right: 5%; padding-top: 2%;">
             <ul style="list-style-type: none;">
                 <li><a href="#content1" >London</a></li>
                 <li><a href="#content2" >Paris</a></li>
@@ -41,31 +46,43 @@
             </ul>
         </nav>
 
-
-        <article id="content1">
+        <div style="background-color:rgb(149, 188, 189) ;">
+         <article id="content1"> 
             <h1>London</h1>
-            <p>London is the capital and largest city of England and the United Kingdom, with a population of just over 9 million.
+            <div style="display:flex;">
+                <p>London is the capital and largest city of England and the United Kingdom, with a population of just over 9 million.
                 It stands on the River Thames in south-east England at the head of a 50-mile (80 km) estuary down to the North Sea,
                 and has been a major settlement for two millennia. The City of London, its ancient core and financial centre,
                 was founded by the Romans as Londinium and retains boundaries close to its medieval ones.</p>
-        </article>
+               
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/London_Montage_L.jpg" alt="" width="20%" height="20%">                
+            </div> 
+         </article>
 
-        <article id="content2">
+         <article id="content2">
             <h1>Paris</h1>
-            <p>Paris is the capital and most populous city of France, with an estimated population of 2,165,423 residents in 
+            <div style="display:flex;">
+                <p>Paris is the capital and most populous city of France, with an estimated population of 2,165,423 residents in 
                 2019 in an area of more than 105 km² (41 sq mi),[4] making it the 34th most densely populated city in the world 
                 in 2020.Since the 17th century, Paris has been one of the world's major centres of finance, diplomacy, 
                 commerce, fashion, gastronomy, science, and arts, and has sometimes been referred to as the capital of the world.</p>
-        </article>
+              
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Eiffel_Tower_from_Place_du_Trocad%C3%A9ro.jpg/200px-Eiffel_Tower_from_Place_du_Trocad%C3%A9ro.jpg"
+                alt=""  width="20%" height="20%">
+            </div>
+         </article>
 
-        <article id="content3">
+         <article id="content3">
             <h1>Tokyo</h1>
+            <div style="display:flex;">
                 <p>Tokyo, formerly Edo, historically Tokio, and officially the Tokyo Metropolis, 
                     is the capital and largest city of Japan. Its metropolitan area is the most populous in the world, with an estimated 
                     37.468 million residents in 2018. Its metropolitan area is the largest in size and the most populous, with an area of 13,452 
                     square kilometers and its city proper has a population of 13.99 million people.</p>
-        </article>
-
+                    <img src="https://www.visa.co.id/dam/VCOM/regional/ap/Marquees/marquee-destinations-tokyo-640x640.jpg" alt="" width="20%" height="20%">
+            </div>
+         </article>
+        </div>
     </section>
 
     <footer>
