@@ -8,10 +8,17 @@
     <style>
 
         *{box-sizing: border-box;}
-        footer{position: fixed;bottom: 0;}
-        section{display: flex;list-style-type: none;}
+        footer{position:fixed; bottom: 0; left: 50%;}
+        section{display: -webkit-flex; display:flex; display: -webkit-flex;}
         header{background-color:cadetblue ; text-align: center;}
+        section article{margin-left: 25%; margin-right: 25%;}
 
+        section article {
+        display: none;}
+        section article:target {
+        display: block;
+        }
+    
     </style>
 </head>
 
@@ -27,18 +34,38 @@
 
     <section>
         <nav>
-            <ul>
-                <li><a href="#">London</a></li>
-                <li><a href="#">Paris</a></li>
-                <li><a href="#">Tokyo</a></li>
+            <ul style="list-style-type: none;">
+                <li><a href="#content1" >London</a></li>
+                <li><a href="#content2" >Paris</a></li>
+                <li><a href="#content3" >Tokyo</a></li>
             </ul>
         </nav>
 
-        <article style=" margin-left: 25%;">
+
+        <article id="content1">
             <h1>London</h1>
-            <p>In deserunt aute duis enim deserunt est tempor pariatur laboris qui culpa.</p>
-            <p>Enim nisi ut pariatur elit et ex duis laboris non deserunt adipisicing proident ullamco.</p>
+            <p>London is the capital and largest city of England and the United Kingdom, with a population of just over 9 million.
+                It stands on the River Thames in south-east England at the head of a 50-mile (80 km) estuary down to the North Sea,
+                and has been a major settlement for two millennia. The City of London, its ancient core and financial centre,
+                was founded by the Romans as Londinium and retains boundaries close to its medieval ones.</p>
         </article>
+
+        <article id="content2">
+            <h1>Paris</h1>
+            <p>Paris is the capital and most populous city of France, with an estimated population of 2,165,423 residents in 
+                2019 in an area of more than 105 km² (41 sq mi),[4] making it the 34th most densely populated city in the world 
+                in 2020.Since the 17th century, Paris has been one of the world's major centres of finance, diplomacy, 
+                commerce, fashion, gastronomy, science, and arts, and has sometimes been referred to as the capital of the world.</p>
+        </article>
+
+        <article id="content3">
+            <h1>Tokyo</h1>
+                <p>Tokyo, formerly Edo, historically Tokio, and officially the Tokyo Metropolis, 
+                    is the capital and largest city of Japan. Its metropolitan area is the most populous in the world, with an estimated 
+                    37.468 million residents in 2018. Its metropolitan area is the largest in size and the most populous, with an area of 13,452 
+                    square kilometers and its city proper has a population of 13.99 million people.</p>
+        </article>
+
     </section>
 
     <footer>
