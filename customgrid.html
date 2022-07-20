@@ -25,7 +25,6 @@
         .container{background-color:burlywood; 
             max-width: 1140px;
             margin-right: auto;margin-left: auto;   
-            display: grid;
         }
         
         .row{border: 2px solid brown;}
@@ -71,7 +70,8 @@
            
         </div>
 
-        <!-- %0.001 lik farktan dolayı mı ekran küçüldüğünde aşağıya kayıyor? yukarıda sıkıntı yaşanmıyor fakat buralarda hep yapı bozuluyor. -->
+        <!-- col 2 ile ilgili sıkıntı var. css'i almıyor -->
+
         <div class="row">
             <div class="col-2">Hi I'm Col 2 16.66% Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                 Fugiat veniam distinctio, vel delectus architecto enim aut illo molestiae, 
@@ -87,9 +87,11 @@
         </div>
 
         <div class="row">
-            <div class="col-2">Hi I'm Col 2 16.66% </div>
             <div class="col-7">Hi I'm Col 7 58.33% </div> 
-            <div class="col-3">Hi I'm Col 3 25% </div> 
+            <div class="col-4">Hi I'm Col 4 33.33%</div>  
+            <div class="col-1">Hi I'm Col 1 8.33% </div> 
+
+
         </div>
 
         <div class="row">
@@ -107,7 +109,6 @@
             <div class="col-12">Hi I'm Col 12 100% </div> 
 
         </div>
-
     </div>
 
 
