@@ -262,6 +262,7 @@ footer{position:fixed; bottom: 0; left:4% ; right:4%;background-color: #d2c0c0; 
     font-size: 20px;
     cursor: pointer;
     padding: 10px 15px;
+    text-decoration: none;
     border: none;
   }
   
