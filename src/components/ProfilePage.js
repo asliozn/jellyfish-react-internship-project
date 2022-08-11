@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Anchor } from "react-bootstrap";
+import axios from 'axios';
 
 const ProfilePage = () => {
 
@@ -25,14 +25,51 @@ const ProfilePage = () => {
         marginBottom: '1rem'
         }
 
+        const config = {
+            headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbGFsb2xhQGhvdG1haWwuY29tIiwidXNlcm5hbWUiOiJsaWxhbG9sYTU2IiwiaWF0IjoxNjYwMjE3OTEzLCJleHAiOjE2NjU0MDE5MTN9.RLUZzaSuTRcnOoVkWD1AvatgYp_ejI1L6ijJtb4ahTQ`}
+          }
+          
+          const [user, setUser] = useState([]);
+          const [loading, setLoading] = useState(true);
+          const [error, setError] = useState(null);
+          const[articles, setArticles] = useState([]);
+
+         
+          const fetchUser = async () => {
+              setLoading(true);
+              setError(null);
+              try {
+                  const res = await fetch('https://api.realworld.io/api/user', config);
+                  const data = await res.json();
+                  setUser(data.user);
+                  setLoading(false);
+              } catch (error) {
+                  setError(error.message);
+                  setLoading(false);
+              }
+          }
+
+          useEffect(() => {
+            fetchUser();
+        } , []);
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+        if (error) {
+            return <div>{error}</div>;
+        }
+    
+
     return (
+    
     <>
+
         <div className="user-container" style={{color: '#6963AD',marginBottom: '2%'}}>
             <div className="row">
                 <div className="col-md-12">
-                <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style={imageStyle} alt="profile picture" />
-                <h4>user name</h4>
-                <p>user bio</p>
+                <img src={user.image} style={imageStyle} alt="profile picture" />
+                    <h4>{user.username}</h4>
+                    <p>{user.bio}</p>
                 <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}>Follow Button</Button>
                 <a href="/settings" style={linkStyle}> Go to Settings</a>
             </div>
@@ -56,7 +93,7 @@ const ProfilePage = () => {
                     <article style={{borderTop:' 1px solid rgba(0,0,0,0.1)',clear: 'both'}}>
                         
                         <h5>Welcome to JellyFish!</h5>
-                        <p>
+                        <p style={{color:'grey'}}>
                             JellyFish is a place to share your thoughts and ideas.
                             It is a place to connect with other people and share your ideas.
                             It is a place to share your ideas and thoughts with other people.

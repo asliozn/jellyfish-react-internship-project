@@ -2,6 +2,10 @@ import React from "react";
 import { Link} from 'react-router-dom';
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+
 
 const linkStyle = {
     margin: "1rem",
@@ -9,15 +13,34 @@ const linkStyle = {
     color: '#6963AD'
   };
 
-const SignUp = () => (
+const SignUp = () => {
+  let navigate = useNavigate();
+
+  const registerHandler = async (values, { setSubmitting }) => {
+    const payload = {
+      "user": {
+        "username": values.username,
+        "email": values.email,
+        "password": values.password,
+      }
+      // make payload here using values
+    }
+    try {
+      const response = await axios.post('https://api.realworld.io/api/users', payload)
+      console.log(response.data)
+      navigate("/login", { replace: true });
+
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return(
    <Formik
-      initialValues={{ email: "Email Adress", password: "Your Password" , username: "e.g lilalola"}}
-      onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-      console.log("Logging in", values);
-      setSubmitting(false);
-    }, 500);
-  }}
+      initialValues={{ email: "", password: "" , username: ""}}
+      onSubmit={registerHandler}
 
   validationSchema={Yup.object().shape({
     email: Yup.string()
@@ -48,7 +71,10 @@ const SignUp = () => (
       handleSubmit
     } = props;
 
-      return(<div className="Auth-form-container">
+
+      return(
+        <>
+      <div className="Auth-form-container">
       <form className="Auth-form"onSubmit={handleSubmit}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
@@ -111,10 +137,10 @@ const SignUp = () => (
           </div>
         </div>
       </form>
-    </div>); }}
-
+    </div>
+    </>); }}
   </Formik>
 );
+}
      
-
-export default SignUp;
+export default SignUp

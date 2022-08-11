@@ -2,23 +2,47 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 const linkStyle = {
     margin: "1rem",
     textDecoration: "none",
     color: '#6963AD'
   };
-const Login = () => (
+  
+const Login = () => {
 
+
+  let navigate = useNavigate();
+  const loginHandler = async (values, { setSubmitting }) => {
+    const payload = {
+      "user": {
+        "email": values.email,
+        "password": values.password,
+      }
+      // make payload here using values
+    }
+    try {
+      const response = await axios.post('https://api.realworld.io/api/users/login', payload)
+      console.log(response.data)
+
+    if (response.status === 200) {
+       navigate("/");
+    }
+      
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return(
   <Formik
-      initialValues={{ email: "Email Adress", password: "Your Password" , username: "e.g lilalola"}}
-      onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-      console.log("Logging in", values);
-      setSubmitting(false);
-    }, 500);
-  }}
-
+      initialValues={{ email: "", password: "" }}
+      onSubmit={loginHandler}
   validationSchema={Yup.object().shape({
     email: Yup.string()
       .email()
@@ -37,15 +61,16 @@ const Login = () => (
       handleBlur,
       handleSubmit
     } = props;
-
     return (
+      <>
+
         <div className="Auth-form-container">
-            <form className="Auth-form" onSubmit={handleSubmit}>
+            <form className="Auth-form"onSubmit={handleSubmit} >
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">Sign In</h3>
                     <div className="text-center">
                         Not registered?{" "}
-                        <Link to="/signup" style={linkStyle}>Sign Up</Link>
+                        <Link to="/register" style={linkStyle}>Sign Up</Link>
                     </div>
                     <div className="form-group mt-3">
                         <label>Email address</label>
@@ -86,10 +111,13 @@ const Login = () => (
                 </div>
             </form>
         </div>
+      </>
     );  
+    
   }}
 
-  </Formik>
-);
+  </Formik>);
+
+};
 
 export default Login;

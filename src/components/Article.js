@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 
 
-
 const ArticleBannerStyle = {
     backgroundColor: '#7a76abbf',
     backgroundPosition: 'center',
@@ -57,7 +56,6 @@ const Article = () => {
         <>
         <div style={ArticleBannerStyle}>
         <h3>Article Name</h3>
-
         <div>
             <a href='/profile'><img
             src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style={imageStyle2} alt="profile" /></a>
