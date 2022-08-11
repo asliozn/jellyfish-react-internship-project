@@ -9,7 +9,7 @@ import Settings from './components/Settings';
 import ProfilePage from './components/ProfilePage';
 import Article from './components/Article';
 import Navbarjelly from './components/Navbarjelly';
-import {AuthContext,auth} from './AuthContext';
+import {AuthContext,auth} from './components/AuthContext';
 
 function App() {
 
