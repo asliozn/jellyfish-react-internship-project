@@ -1,9 +1,11 @@
-import React from "react";
+/* eslint-disable no-template-curly-in-string */
+import React, {useContext}  from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import {AuthContext} from './AuthContext';
 
 
 const linkStyle = {
@@ -12,8 +14,9 @@ const linkStyle = {
     color: '#6963AD'
   };
   
-const Login = () => {
+const Login = (props) => {
 
+  const authInfo = useContext(AuthContext);
 
   let navigate = useNavigate();
   const loginHandler = async (values, { setSubmitting }) => {

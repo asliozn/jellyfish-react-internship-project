@@ -24,7 +24,6 @@ const SignUp = () => {
         "email": values.email,
         "password": values.password,
       }
-      // make payload here using values
     }
     try {
       const response = await axios.post('https://api.realworld.io/api/users', payload)

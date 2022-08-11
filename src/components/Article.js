@@ -57,11 +57,11 @@ const Article = () => {
         <div style={ArticleBannerStyle}>
         <h3>Article Name</h3>
         <div>
-            <a href='/profile'><img
+            <a href='/user'><img
             src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style={imageStyle2} alt="profile" /></a>
             
             <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-            <a href='/profile' style={linkStyle}>User Name</a>
+            <a href='/user' style={linkStyle}>User Name</a>
             <span style={{    color: '#bbb',
             fontSize: '0.8rem',
              display: 'block'}}>
@@ -93,11 +93,11 @@ const Article = () => {
            <hr/>
            <div>
             
-                <a href='/profile'><img
+                <a href='/user'><img
                 src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style={imageStyle2} alt="profile" /></a>
                 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                <a href='/profile' style={linkStyle}>User Name</a>
+                <a href='/user' style={linkStyle}>User Name</a>
                 <span style={{    color: '#bbb',
                 fontSize: '0.8rem',
                 display: 'block'}}>
@@ -139,12 +139,12 @@ const Article = () => {
                     </div>
 
                     <span>
-                        <a href='/profile'><img
+                        <a href='/user'><img
                         src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style={imageStyle2} alt="profile" /></a>
                         
                         <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
                         
-                            <a href='/profile' style={linkStyle}>User Name</a>
+                            <a href='/user' style={linkStyle}>User Name</a>
                             
                             <span style={{    color: '#bbb',fontSize: '0.8rem',display: 'block'}}>August 8, 2022</span>
                             

@@ -1,9 +1,9 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, {useState,useEffect} from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios from 'axios';
 
 const ProfilePage = () => {
 
@@ -32,9 +32,7 @@ const ProfilePage = () => {
           const [user, setUser] = useState([]);
           const [loading, setLoading] = useState(true);
           const [error, setError] = useState(null);
-          const[articles, setArticles] = useState([]);
 
-         
           const fetchUser = async () => {
               setLoading(true);
               setError(null);
@@ -52,6 +50,7 @@ const ProfilePage = () => {
           useEffect(() => {
             fetchUser();
         } , []);
+        
         if (loading) {
             return <div>Loading...</div>;
         }

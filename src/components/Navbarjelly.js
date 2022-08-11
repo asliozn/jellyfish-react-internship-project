@@ -42,7 +42,7 @@ const Navbarjelly = () => {
             </li>
             <li> <a href="/editor" style={linkStyle}>New Article</a></li>
             <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
-            <li> <a href="/profile" style={linkStyle}>Profile</a></li>
+            <li> <a href="/user" style={linkStyle}>Profile</a></li>
             
           </ul>
          </div>
