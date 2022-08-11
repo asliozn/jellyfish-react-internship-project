@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -49,7 +50,7 @@ validationSchema={Yup.object().shape({
     .required("No password provided.")
     .min(7, "Password is too short - should be 7 chars minimum.")
     .max(15, "Password is too long - should be 15 chars maximum.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number."),
+    .matches(/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]/, "Password must contain a number a special character."),
 
     bio: Yup.string()
     .required("Required")
@@ -94,6 +95,7 @@ validationSchema={Yup.object().shape({
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Control type="text" 
             name="username"
+            // eslint-disable-next-line no-template-curly-in-string
             className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
             placeholder="e.g lilalola"
             value={values.username}

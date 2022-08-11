@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React from "react";
 import { Link} from 'react-router-dom';
 import { Formik } from "formik";
@@ -52,7 +53,7 @@ const SignUp = () => {
       .required("No password provided.")
       .min(7, "Password is too short - should be 7 chars minimum.")
       .max(15, "Password is too long - should be 15 chars maximum.")
-      .matches(/(?=.*[0-9])/, "Password must contain a number."),
+      .matches(/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]/, "Password must contain a number and a special character."),
 
     username: Yup.string()
       .required("Required") 
