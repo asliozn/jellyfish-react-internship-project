@@ -18,6 +18,7 @@ const SignUp = () => {
   let navigate = useNavigate();
 
   const registerHandler = async (values, { setSubmitting }) => {
+    console.log(values);
     const payload = {
       "user": {
         "username": values.username,
@@ -28,7 +29,7 @@ const SignUp = () => {
     try {
       const response = await axios.post('https://api.realworld.io/api/users', payload)
       console.log(response.data)
-      navigate("/login", { replace: true });
+      navigate("/login");
 
     } catch (e) {
       console.log(e)

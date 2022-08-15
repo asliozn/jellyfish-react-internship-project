@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Pagination from 'react-bootstrap/Pagination';
+import useAuth from "../hooks/useAuth";
+import Navbarjelly from './Navbarjelly';
 
 const bannerStyle = {
     backgroundColor: '#AA86D5',
@@ -28,7 +30,7 @@ const tagStyle ={
     fontSize: '13px',
 }
 const Home = () => {
-
+   
     let active = 1;
     let items = [];
     for (let number = 1; number <= 5; number++) {
@@ -84,8 +86,10 @@ const Home = () => {
     }
 
     return (
-        <>
-        
+        <>   
+        <Navbarjelly />
+
+
         <div className="banner" style={bannerStyle}>
                         <h1>JellyFish</h1>
                         <h2>A place to share your thoughts</h2>

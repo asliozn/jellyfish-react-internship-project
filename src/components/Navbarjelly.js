@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import logo from "./images/jellyfish_logo.png";
+import useAuth from "../hooks/useAuth";
 
 
 const Navbarjelly = () => {
@@ -11,6 +12,10 @@ const Navbarjelly = () => {
     textDecoration: "none",
     color: '#6963AD'
   };
+  const user = localStorage.getItem('user');
+  const user1 =JSON.parse(user);
+
+
     return (
       <>
       <nav className="navigation">
@@ -30,6 +35,51 @@ const Navbarjelly = () => {
             isNavExpanded ? "navigation-menu expanded" : "navigation-menu"
           }
         >
+
+    {user ? ( <ul>
+        
+        <li> <a href="/editor" style={linkStyle}>New Article</a></li>
+          <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
+          <li> <a href="/user" style={linkStyle}>{user1.username}</a></li>
+          <li>
+            <a href="/" style={linkStyle}>Home</a>
+          </li>
+
+        </ul> ):(
+         <ul>
+            <li>
+              <a href="/" style={linkStyle}>Home</a>
+            </li>
+            <li>
+              <a href="/login" style={linkStyle}>Sign In</a>
+            </li>
+            <li>
+             <a href="/register" style={linkStyle}>Sign Up</a>
+            </li>
+
+          </ul>)}
+       
+         </div>
+      </nav>  
+      
+      </>
+    );
+}
+
+/*{auth?.accessToken ? (
+          <>
+         <ul>
+        
+          <li> <a href="/editor" style={linkStyle}>New Article</a></li>
+            <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
+            <li> <a href="/user" style={linkStyle}>Profile</a></li>
+
+          </ul>
+          </>
+         
+        
+        ) : ( 
+          
           <ul>
             <li>
               <a href="/" style={linkStyle}>Home</a>
@@ -40,16 +90,9 @@ const Navbarjelly = () => {
             <li>
              <a href="/register" style={linkStyle}>Sign Up</a>
             </li>
-            <li> <a href="/editor" style={linkStyle}>New Article</a></li>
-            <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
-            <li> <a href="/user" style={linkStyle}>Profile</a></li>
-            
+
           </ul>
-         </div>
-      </nav>  
-      
-      </>
-    );
-}
+       
+        )}   */
 
 export default Navbarjelly;

@@ -1,23 +1,41 @@
 /* eslint-disable no-template-curly-in-string */
-import React from "react";
+import React, {useContext} from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import useAuth  from "../hooks/useAuth";
+import Navbarjelly from "./Navbarjelly";
+
+
 
 
 const Settings = () => {
+  const { setAuth } = useAuth();
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    // if used in more components, this should be in context 
+    // axios to /logout endpoint 
+    setAuth({});
+    localStorage.removeItem("user");
+    navigate('/');
+}
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
 
   const config = {
-    headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbGFsb2xhQGhvdG1haWwuY29tIiwidXNlcm5hbWUiOiJsaWxhbG9sYTU2IiwiaWF0IjoxNjYwMjE3OTEzLCJleHAiOjE2NjU0MDE5MTN9.RLUZzaSuTRcnOoVkWD1AvatgYp_ejI1L6ijJtb4ahTQ`}
+    headers: { Authorization: `Bearer ${user.token}` }
   }
   
     const registerHandler = async (values, { setSubmitting }) => {
     const payload = {
       "user": {
         "email": values.email,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbGFsb2xhQGhvdG1haWwuY29tIiwidXNlcm5hbWUiOiJsaWxhbG9sYTU2IiwiaWF0IjoxNjYwMjE3OTEzLCJleHAiOjE2NjU0MDE5MTN9.RLUZzaSuTRcnOoVkWD1AvatgYp_ejI1L6ijJtb4ahTQ",
+        "token": `${user.token}`,
         "username": values.username,
         "bio": values.bio,
         "image": values.url,
@@ -28,6 +46,7 @@ const Settings = () => {
     try {
       const response = await axios.put('https://api.realworld.io/api/user', payload,config)
       console.log(response.data)
+      navigate('/user')
     } catch (e) {
       console.log(e)
     } finally {
@@ -43,20 +62,16 @@ return(
 validationSchema={Yup.object().shape({
   email: Yup.string()
     .email()
-    .required("Required")
     .matches(/\S+@\S+\.\S+/, "Invalid email address"),
 
   password: Yup.string()
-    .required("No password provided.")
     .min(7, "Password is too short - should be 7 chars minimum.")
     .max(15, "Password is too long - should be 15 chars maximum.")
     .matches(/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]/, "Password must contain a number a special character."),
 
     bio: Yup.string()
-    .required("Required")
     .min(50, "Bio is too short - should be 50 chars minimum."),
   username: Yup.string()
-    .required("Required") 
     .min(8, "Username is too short - should be 8 chars minimum.")
     .max(16, "Username is too long - should be 16 chars maximum."),
     url: Yup.string()
@@ -75,6 +90,8 @@ validationSchema={Yup.object().shape({
 
     return (
 <>
+<Navbarjelly />
+
         <div style={{margin: 'auto', width: '50%'}}>
 
         <Form onSubmit={handleSubmit}>
@@ -97,7 +114,7 @@ validationSchema={Yup.object().shape({
             name="username"
             // eslint-disable-next-line no-template-curly-in-string
             className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
-            placeholder="e.g lilalola"
+            placeholder={user.username}
             value={values.username}
             onChange={handleChange}
             onBlur={handleBlur} />
@@ -109,7 +126,7 @@ validationSchema={Yup.object().shape({
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Control as="textarea" rows={3} type="text" 
-            placeholder="Short bio about you!" 
+            placeholder={user.bio}
             name="bio"
             className={'form-control mt-1 ${errors.bio && touched.bio && "error"}'}
             value={values.bio}
@@ -122,7 +139,7 @@ validationSchema={Yup.object().shape({
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Control type="email" placeholder="Your email"
+            <Form.Control type="email" placeholder={user.email}
             name="email"
             className={'form-control mt-1 ${errors.email && touched.email && "error"}'}
             value={values.email}
@@ -151,7 +168,7 @@ validationSchema={Yup.object().shape({
             </Button>
         </Form>
 
-        <Button style={{color: '#B85C5C',backgroundColor: 'transparent', borderColor: '#B85C5C'}}> Click here to logout!</Button>
+        <Button style={{color: '#B85C5C',backgroundColor: 'transparent', borderColor: '#B85C5C'}} onClick={logout}> Click here to logout!</Button>
 
         </div>
         </>

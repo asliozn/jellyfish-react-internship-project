@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Navbarjelly from "./Navbarjelly";
 
 const ProfilePage = () => {
 
@@ -25,8 +26,10 @@ const ProfilePage = () => {
         marginBottom: '1rem'
         }
 
+        const user1 = JSON.parse(localStorage.getItem('user'));
+
         const config = {
-            headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbGFsb2xhQGhvdG1haWwuY29tIiwidXNlcm5hbWUiOiJsaWxhbG9sYTU2IiwiaWF0IjoxNjYwMjE3OTEzLCJleHAiOjE2NjU0MDE5MTN9.RLUZzaSuTRcnOoVkWD1AvatgYp_ejI1L6ijJtb4ahTQ`}
+            headers: { Authorization: `Bearer ${user1.token}` }
           }
           
           const [user, setUser] = useState([]);
@@ -58,10 +61,11 @@ const ProfilePage = () => {
             return <div>{error}</div>;
         }
     
-
     return (
     
     <>
+    <Navbarjelly />
+
 
         <div className="user-container" style={{color: '#6963AD',marginBottom: '2%'}}>
             <div className="row">

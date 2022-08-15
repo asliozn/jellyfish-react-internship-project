@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
-
+import Navbarjelly from "./Navbarjelly";
 
 
 const Editor = () => {
@@ -65,6 +65,8 @@ validationSchema={Yup.object().shape({
   
     return (
       <>
+      <Navbarjelly />
+
       <div style={{margin: 'auto', width: '50%'}}>
 
       <Form onSubmit={handleSubmit}>

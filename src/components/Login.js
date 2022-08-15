@@ -1,11 +1,12 @@
 /* eslint-disable no-template-curly-in-string */
-import React, {useContext}  from "react";
+import React, {useState}  from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import {AuthContext} from './AuthContext';
+import useAuth  from "../hooks/useAuth";
+import Navbarjelly from "./Navbarjelly";
 
 
 const linkStyle = {
@@ -14,12 +15,16 @@ const linkStyle = {
     color: '#6963AD'
   };
   
-const Login = (props) => {
+const Login = () => {
 
-  const authInfo = useContext(AuthContext);
+  const { setAuth } = useAuth();
+  const { auth } = useAuth();
+
+  const [error, setError] = useState(false);
 
   let navigate = useNavigate();
   const loginHandler = async (values, { setSubmitting }) => {
+
     const payload = {
       "user": {
         "email": values.email,
@@ -27,20 +32,32 @@ const Login = (props) => {
       }
       // make payload here using values
     }
-    try {
-      const response = await axios.post('https://api.realworld.io/api/users/login', payload)
-      console.log(response.data)
 
-    if (response.status === 200) {
-       navigate("/");
+    try {
+      const response = await axios.post( 'https://api.realworld.io/api/users/login', payload);
+      console.log(response.data)
+      //console.log(JSON.stringify(response));
+      localStorage.setItem("user", JSON.stringify(response?.data?.user));
+      setAuth(response?.data?.user);
+      navigate('/')
+  } catch (error) {
+      if (!error?.response) {
+           setError('No Server Response');
+      } else if (error.response?.status === 400) {
+          setError('Missing Username or Password');
+      } else if (error.response?.status === 401) {
+          setError('Unauthorized');
+      } else {
+          setError('Login Failed');
+      }
+      console.log(error);
     }
-      
-    } catch (e) {
-      console.log(e)
-    } finally {
-      setSubmitting(false)
+      finally {
+        setSubmitting(false)
+      }
+
     }
-  }
+  
 
   return(
   <Formik
@@ -66,6 +83,8 @@ const Login = (props) => {
     } = props;
     return (
       <>
+
+<Navbarjelly />
 
         <div className="Auth-form-container">
             <form className="Auth-form"onSubmit={handleSubmit} >
