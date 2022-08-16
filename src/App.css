@@ -48,6 +48,15 @@
     display: block;
     padding: 0.5em 1em;
   }
+
+  .profile-page-anchor:hover{
+    border-bottom: 2px solid #6963AD;
+
+  }
+
+  .profile-page-anchor:active{
+    border-bottom: 2px solid #6963AD;
+  }
  
 
 .profile-page-list{

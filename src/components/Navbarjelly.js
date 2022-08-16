@@ -1,6 +1,5 @@
 import React,{useState} from "react";
 import logo from "./images/jellyfish_logo.png";
-import useAuth from "../hooks/useAuth";
 
 
 const Navbarjelly = () => {
@@ -38,7 +37,7 @@ const Navbarjelly = () => {
 
     {user ? ( <ul>
         
-        <li> <a href="/editor" style={linkStyle}>New Article</a></li>
+        <li> <a href="/editor" style={linkStyle}>New Article </a></li>
           <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
           <li> <a href="/user" style={linkStyle}>{user1.username}</a></li>
           <li>

@@ -1,18 +1,25 @@
 import './App.css';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Routes, Route} from 'react-router-dom';
-import Home from './components/Home';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import Editor from './components/Editor';
-import Settings from './components/Settings';
-import ProfilePage from './components/ProfilePage';
-import Article from './components/Article';
-import Navbarjelly from './components/Navbarjelly';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Editor from './pages/Editor';
+import Settings from './pages/Settings';
+import ProfilePage from './pages/ProfilePage';
+import Article from './pages/Article';
+import {useDispatch} from 'react-redux';
+import {fetchPosts} from './store/actions/post';
 
 function App() {
 
-  return (
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log('fetching posts');
+    dispatch(fetchPosts());
+  } , [dispatch]);
+
+return (
     <>
 
     <Routes> 
