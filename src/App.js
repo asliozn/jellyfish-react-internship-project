@@ -10,15 +10,17 @@ import ProfilePage from './pages/ProfilePage';
 import Article from './pages/Article';
 import {useDispatch} from 'react-redux';
 import {fetchPosts} from './store/actions/post';
+import {fetchTags} from './store/actions/tags';
 
 function App() {
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log('fetching posts');
-    dispatch(fetchPosts());
-  } , [dispatch]);
 
+  useEffect(() => {
+  dispatch(fetchPosts());
+  dispatch(fetchTags());
+  }, [dispatch]);
+  
 return (
     <>
 
@@ -31,9 +33,8 @@ return (
        <Route path="/user" element={<ProfilePage/>}>
         <Route path=":@userId" element={<ProfilePage />} />
         </Route>
-      <Route path="/article" element={<Article/>}>
-        <Route path=":articleSlug" element={<Article />} />
-        </Route>
+        <Route path="/article/:articleSlug" element={<Article />} />
+
     </Routes>
     </>
     
