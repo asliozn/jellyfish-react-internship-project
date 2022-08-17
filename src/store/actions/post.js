@@ -8,7 +8,7 @@ export const fetchPosts = () => async (dispatch) => {
     try {
         const res = await fetch('https://api.realworld.io/api/articles?limit=20&offset=0');
         const data = await res.json();
-        console.log(data);
+        //console.log(data);
         dispatch({
         type: types.FETCH_POSTS,
         payload: data

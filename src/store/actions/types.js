@@ -1,3 +1,6 @@
 export const FETCH_POSTS = "FETCH_POSTS";
 export const CREATE_ARTICLE = "CREATE_ARTICLE";
+export const FETCH_TAGS = "FETCH_TAGS";
+export const FETCH_ARTICLE = "FETCH_ARTICLE";
+export const FETCH_COMMENTS_BY_SLUG = "FETCH_COMMENTS_BY_SLUG";
 
