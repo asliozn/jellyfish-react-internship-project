@@ -1,98 +1,42 @@
-import React,{useEffect,useState} from "react";
+import React from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Pagination from 'react-bootstrap/Pagination';
 import Navbarjelly from '../components/Navbarjelly';
 import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {fetchPosts} from '../store/actions/post';
+import {fetchTags} from '../store/actions/tags';
+import {Link} from 'react-router-dom'; 
 
-const bannerStyle = {
-    backgroundColor: '#AA86D5',
-    backgroundPosition: 'center',
-    height: '30vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    boxShadow: 'inset 0 8px 8px -8px rgb(0 0 0 / 30%),inset 0 -8px 8px -8px rgb(0 0 0 / 30%)',
-    color: 'white',
-    textShadow: '2px 2px rgb(0 0 0 / 30%)',
-    marginBottom: '4%'
-}
+
 
 const tagStyle ={
+    textDecoration:'none',
+    float:'right',
+    color:'white',
+   borderColor:'white',
     backgroundColor: '#AA86D5',
     textAlign: 'center',
     borderRadius: '10px',
-    borderColor:'white',
-    margin: '5px',
-    padding: '5px',
-    color: 'white',
     fontSize: '13px',
+    padding: '5px',
+
 }
 const Home = () => {
 
+
     const articleList = useSelector(state => state.post.posts.articles);
-   
-    let active = 1;
-    let items = [];
-    for (let number = 1; number <= 5; number++) {
-    items.push(
-        <Pagination.Item key={number} active={number === active}>
-        {number}
-        </Pagination.Item>,
-    );
-   }
-
-    /*const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [tags, setTags] = useState([]);
-
-    const fetchArticles = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const res = await fetch('https://api.realworld.io/api/articles?limit=20&offset=0');
-            const data = await res.json();
-            setArticles(data.articles);
-            setLoading(false);
-        } catch (error) {
-            setError(error.message);
-            setLoading(false);
-        }
-    }
-
-    const fetchTags = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const res = await fetch('https://api.realworld.io/api/tags');
-            const data = await res.json();
-            setTags(data.tags);
-            setLoading(false);
-        } catch (error) {
-            setError(error.message);
-            setLoading(false);
-        }
-    }
-    useEffect(() => {
-        fetchArticles();
-        fetchTags();
-    } , []);
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    if (error) {
-        return <div>{error}</div>;
-    }*/
-
+    console.log(articleList);
+    const tagList = useSelector(state => state.tag.tags.tags);
+    console.log(tagList);
     return (
         <>   
         <Navbarjelly />
 
 
-        <div className="banner" style={bannerStyle}>
+        <div className="banner-style" >
                         <h1>JellyFish</h1>
                         <h2>A place to share your thoughts</h2>
                         </div>
@@ -103,28 +47,35 @@ const Home = () => {
             <Row>
             <Col sm={9} xs={12}>
                 <div>                    
-                    <h5><a href="/" style={{ textDecoration: "none",color: '#6963AD'}}>Global Feed </a></h5>
+                    <h5><a href="/" style={{ textDecoration: "none",color: '#6963AD'}} className='profile-page-anchor'>Global Feed </a></h5>
 
                     <article >
-                         {articleList.map(article => (
-                            <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)'}}>
+                        { articleList?.map(article => (
+                            <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
                             <h5>{article.title}</h5>
                             <p style={{color:'grey'}}>{article.description}</p>
+
+
+                            <div style={{display:'flex', justifyContent:'space-between'}}>  
+                            <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+                           
                             <a href='/' style={tagStyle}>{article.tagList}</a> 
-                            <a href='/article' style={{color:'#6963AD', float:'right'}} >{article.slug}</a>
                             </div>
-                    ))} 
+                         
+                             </div>
+                    ))}   
                     </article>
                 </div>
             </Col>
+            
             <Col sm={3} xs={12} >
                 <div style={{backgroundColor:'#F1EAF6',width:'100%',textAlign:'center',paddingBottom:'15px',
-                color: '#6963AD',borderRadius: '15px'}}>
+                color: '#6963AD', marginTop:'5%'}}>
                     <h6>Popular Tags</h6>
 
-                    {/* {tags.map(tag => (  
-                        <button key={tag.id} style={tagStyle}>{tag}</button>
-                    ))} */}
+                   {tagList?.map(tags => (  
+                        <button key={tags.id} className='forHoverTag'>{tags}</button>
+                    ))}   
 
                 </div>
             </Col>
@@ -132,10 +83,7 @@ const Home = () => {
             <br/>
             <br/>
             
-            <div style={{   display: 'flex',justifyContent: 'center'}}>
-                        <br/>
-                        <Pagination size="md">{items}</Pagination>
-                    </div>
+            
         </Container>
 
 
