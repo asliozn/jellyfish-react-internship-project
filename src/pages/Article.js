@@ -5,57 +5,10 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbarjelly from '../components/Navbarjelly';
-import { useParams } from 'react-router-dom';
+import { useParams , Link} from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux';
 import {fetchArticle} from '../store/actions/article';
-import { fetchCommentsBySlug } from '../store/actions/comment';
-
-const ArticleBannerStyle = {
-    backgroundColor: '#7a76abbf',
-    backgroundPosition: 'center',
-    height: '25vh',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    float: 'left',
-    boxShadow: 'inset 0 8px 8px -8px rgb(0 0 0 / 20%),inset 0 -8px 8px -8px rgb(0 0 0 / 20%)',
-    color: 'white',
-    marginBottom: '4%',
-    paddingTop: '2%',
-    paddingLeft: '5%',
-}
-
-const imageStyle2 = {
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    height: '32px',
-    width: '32px',
-    borderRadius: '30px',
-    marginRight: '1rem',
-}
-
-const tagStyle ={
-    backgroundColor: '#AA86D5',
-    textAlign: 'center',
-    borderRadius: '10px',
-    borderColor:'white',
-    margin: '5px',
-    padding: '5px',
-    color: 'white',
-    fontSize: '13px',
-    textDecoration: 'none',
-    width: '15%',
-    float: 'right',
-}
-
-const linkStyle = {
-        textDecoration: "none",
-        color: '#6963AD',
-        padding: '0.25rem 0.5rem',
-        fontSize: '0.875rem',
-        marginRight: '1rem',
-        fontWeight: '600',
-      };
+import { fetchCommentsBySlug,addComment,deleteComment } from '../store/actions/comment';
 
       const user = JSON.parse(localStorage.getItem('user'));
       console.log(user);
@@ -77,6 +30,8 @@ const Article = () => {
     console.log(article);
 
         const [validated, setValidated] = useState(false);
+        const [value, setValue] = useState();        
+        const onInput = ({target:{value}}) => setValue(value);
 
         const handleSubmit = (event) => {
             const form = event.currentTarget;
@@ -84,36 +39,38 @@ const Article = () => {
             event.preventDefault();
             event.stopPropagation();
             }
-
             setValidated(true);
+            dispatch(addComment(articleSlug, value));
+          
         };
 
     return (
         <>
         <Navbarjelly />
 
-        <div style={ArticleBannerStyle}>
+        <div className='article-banner-style'>
                 
             <h1>{article?.title}</h1>
             <div>
                 <a href='/user'><img
-                src= {article?.author.image} style={imageStyle2} alt="profile" /></a>
+                src= {article?.author.image} className='home-page-image-style' alt="profile" /></a>
                 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                <a href='/user' style={linkStyle}>{article?.author.username}</a>
+                <a href='/user' className='home-page-link-style'>{article?.author.username}</a>
                 <span style={{    color: '#bbb',
                 fontSize: '0.8rem',
                 display: 'block'}}>
                         {article?.createdAt}</span>
                 </div>
+                <Link  to={`/editor/${article?.slug}`}> Edit Article</Link>
 
-            {user ? (<span>
-                <Button variant='outline-secondary' size='sm' style={{marginRight:'1rem'}} href="/editor"> Edit Article</Button>
+            {article?.author.username === user.username ? (<span>
+                <Link  to={`/editor/${article?.slug}`}> Edit Article</Link>
                 <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}}>Delete Article</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <Button variant='outline-secondary' size='sm' className='article-buttons'style={{marginRight:'1rem',fontWeight:'600',borderColor:'#7c78ac',color:'#7c78ac', borderWidth:'medium'}}> Favorite</Button>
-                <Button variant="outline-secondary" size='sm'  className='article-buttons' style={{marginRight:'1rem',fontWeight:'600',borderColor:'#7c78ac',color:'#7c78ac', borderWidth:'medium' }} >Follow</Button>
+                <button   className='article-buttons'> Favorite</button>
+                <button className='article-buttons'>Follow</button>
             </span>
             )}
 
@@ -140,23 +97,23 @@ const Article = () => {
 
            <div style={{display: 'flex',justifyContent: 'center',marginBottom:'4%'}}>
             <a href='/user'><img
-            src= {article?.author.image} style={imageStyle2} alt="profile" /></a>
+            src= {article?.author.image} className='home-page-image-style' alt="profile" /></a>
             
             <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-            <a href='/user' style={linkStyle}>{article?.author.username}</a>
+            <a href='/user' className='home-page-link-style'>{article?.author.username}</a>
             <span style={{    color: '#bbb',
             fontSize: '0.8rem',
              display: 'block'}}>
                     {article?.createdAt}</span>
             </div>
 
-            {user ? (<span>
-                <Button variant='outline-secondary' size='sm' style={{marginRight:'1rem'}} href="/editor"> Edit Article</Button>
+            {article?.author.username === user.username ? (<span>
+                <Link  to={`/editor/${article.slug}`}> Edit Article</Link>
                 <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}}>Delete Article</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <Button variant='outline-secondary' size='sm' className='article-buttons'style={{marginRight:'1rem',fontWeight:'600',borderColor:'#7c78ac',color:'#7c78ac', borderWidth:'medium'}}> Favorite</Button>
-                <Button variant="outline-secondary" size='sm'  className='article-buttons' style={{marginRight:'1rem',fontWeight:'600',borderColor:'#7c78ac',color:'#7c78ac', borderWidth:'medium' }} >Follow</Button>
+                <button   className='article-buttons'> Favorite</button>
+                <button className='article-buttons'>Follow</button>
             </span>
             )}
         </div>
@@ -171,10 +128,10 @@ const Article = () => {
                 <div>
                             
                 <a href='/user'><img
-                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style={imageStyle2} alt="profile" /></a>
+                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" className='home-page-image-style' alt="profile" /></a>
 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                <a href='/user' style={linkStyle}>User Name</a>
+                <a href='/user' className='home-page-link-style'>{user?.username}</a>
                 <span style={{    color: '#bbb',
                 fontSize: '0.8rem',
                 display: 'block'}}>
@@ -184,23 +141,31 @@ const Article = () => {
 
             <Row>
                 <Col>
+
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlID='validationCustom01'>
-                 <Form.Control as="textarea" rows={3} placeholder='Write a comment...' required/>
+                 <Form.Control as="textarea" rows={3} 
+                 placeholder='Write a comment...'
+                 onChange={onInput} 
+                 value={value}
+                  required/>
                  <Form.Control.Feedback type="invalid">
                     Please enter a comment.
                     </Form.Control.Feedback>
                  </Form.Group>
-                 <Button variant="primary" type="submit" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right', marginBottom:'2%'}}>
+                 <Button variant="primary" type="submit" 
+                 style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right', marginBottom:'2%'}}>
                     Post Comment
                 </Button>
                 </Form>
+                
                 </Col>
+
             </Row>
             </>
       
           ):(  <span>
-            <p style={{color:'red', textAlign:'center'}}>Please log in to comment</p>
+            <p style={{color:'red', textAlign:'center'}}>Sign in or sign up to add comments on this article.</p>
         </span>
         )}
         
@@ -213,9 +178,9 @@ const Article = () => {
                         <div style={{border: '1px solid #e5e5e5'}}key={comment.id}>
                             <div>
                                 <a href='/user'><img
-                                src={comment?.author.image} style={imageStyle2} alt="profile" /></a>
+                                src={comment?.author.image}  className='home-page-image-style' alt="profile" /></a>
                                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>
-                                <a href='/user' style={linkStyle}>{comment.author.username}</a>
+                                <a href='/user' className='home-page-link-style'>{comment.author.username}</a>
                                 <span style={{    color: '#bbb',
                                 fontSize: '0.8rem',
                                     display: 'block'}}>
