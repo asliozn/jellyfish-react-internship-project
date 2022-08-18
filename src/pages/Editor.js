@@ -4,18 +4,32 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
 import Navbarjelly from "../components/Navbarjelly";
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {createArticle} from '../store/actions/post';
+import { fetchArticle } from "../store/actions/article";
+import { useParams } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
+
 
 
 const Editor = () => {
 
+  let { articleSlug } = useParams();
+  console.log(articleSlug);
   const dispatch = useDispatch();
 
+  articleSlug = articleSlug ? articleSlug : "";
+  dispatch(fetchArticle(articleSlug));
+
+      console.log(articleSlug+"articleSlug");
+      const article = useSelector(state => state.article.article.article);
+    const [success, setSuccess] = React.useState(false);
+
     const registerHandler = async (values, { setSubmitting }) => {      
-     dispatch(createArticle(values));
+      
+      dispatch(createArticle(values));
+      setSuccess(true);
       setSubmitting(false);
   }
 
@@ -63,7 +77,8 @@ validationSchema={Yup.object().shape({
         onBlur={handleBlur}
         className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
 
-        placeholder="Article Title" />
+        placeholder={articleSlug?(`${article?.title}`):('Article Title')}
+        />
 
          {errors.title && touched.title && (
             <div className="input-feedback" style={{color:'red'}}>{errors.title}</div>
@@ -72,7 +87,7 @@ validationSchema={Yup.object().shape({
 
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
       <Form.Control type="text" 
-      placeholder="What's this article about?" 
+      placeholder={articleSlug?(`${article?.description}`):("What's this article about?" )}
       name="description"
         value={values.description}
         className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
@@ -82,12 +97,11 @@ validationSchema={Yup.object().shape({
           {errors.description && touched.description && (
             <div className="input-feedback" style={{color:'red'}}>{errors.description}</div>
             )}
-    
       </Form.Group>
       
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
       <Form.Control as="textarea" rows={3} type="text" 
-         placeholder="Write your article (in markdown)"  
+         placeholder={articleSlug?(`${article?.body}`):("Write your article (in markdown)")} 
         name="body"
         className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
         value={values.body}
@@ -100,7 +114,7 @@ validationSchema={Yup.object().shape({
       </Form.Group>
       
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-      <Form.Control type="text" placeholder="Enter Tags" />
+      <Form.Control type="text" placeholder= {articleSlug?(`${article?.tagList}`):("Enter Tags") } />
       </Form.Group>
       
       <Button variant="primary" type="submit" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}>
@@ -108,6 +122,11 @@ validationSchema={Yup.object().shape({
       </Button>
     </Form>
     </div>
+
+    {success ? (<Alert variant="success" fade='false'>
+    Your article has been published! </Alert> ): (null)}
+
+
     </>
     );
     }}
