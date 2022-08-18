@@ -44,3 +44,17 @@ export const createArticle = (values) =>async (dispatch) => {
       }     
 
 }
+
+export const getArticlesByAuthor = (username) => async (dispatch) => {
+  try {
+      const res = await axios.get(`https://api.realworld.io/api/articles?author=${username}`);
+      const data = await res.data;
+      //console.log(data);
+      dispatch({
+          type: types.GET_ARTICLES_BY_AUTHOR,
+          payload: data
+      });
+  } catch (error) {
+      console.log(error);
+  }
+}

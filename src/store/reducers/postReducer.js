@@ -2,10 +2,10 @@ import * as types from '../actions/types';
 
 const initialState = {
     posts:{
-        "article": {
-          "title": "",
-          "description": "",
-          "body": "",
+        article: {
+          title: "",
+          description: "",
+          body: "",
         }
     }
 }
@@ -20,8 +20,13 @@ export default function postReducer(state = initialState, action) {
         case types.CREATE_ARTICLE:
             return {
                 ...state,
-                posts: [ ...state.posts, action.payload ]
+                //posts: [ ...state.posts, action.payload ]
            };
+        case types.GET_ARTICLES_BY_AUTHOR:
+            return {
+                ...state,
+                posts: action.payload
+            };
         default:
            return {...state,};
     }
