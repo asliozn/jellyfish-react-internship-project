@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import logo from "./images/jellyfish_logo.png";
+import {Link} from "react-router-dom";
 
 
 const Navbarjelly = () => {
@@ -39,7 +40,7 @@ const Navbarjelly = () => {
         
         <li> <a href="/editor" style={linkStyle}>New Article </a></li>
           <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
-          <li> <a href="/user" style={linkStyle}>{user1.username}</a></li>
+          <li> <Link to={`/user/${user1?.username}`} style={linkStyle}>{user1?.username}</Link></li>
           <li>
             <a href="/" style={linkStyle}>Home</a>
           </li>
