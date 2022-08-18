@@ -5,25 +5,10 @@ import Col from 'react-bootstrap/Col';
 import Pagination from 'react-bootstrap/Pagination';
 import Navbarjelly from '../components/Navbarjelly';
 import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
-import {fetchPosts} from '../store/actions/post';
-import {fetchTags} from '../store/actions/tags';
 import {Link} from 'react-router-dom'; 
+import Button from 'react-bootstrap/Button';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
-
-
-const tagStyle ={
-    textDecoration:'none',
-    float:'right',
-    color:'white',
-   borderColor:'white',
-    backgroundColor: '#AA86D5',
-    textAlign: 'center',
-    borderRadius: '10px',
-    fontSize: '13px',
-    padding: '5px',
-
-}
 const Home = () => {
 
 
@@ -50,8 +35,31 @@ const Home = () => {
                     <h5><a href="/" style={{ textDecoration: "none",color: '#6963AD'}} className='profile-page-anchor'>Global Feed </a></h5>
 
                     <article >
+
                         { articleList?.map(article => (
                             <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
+
+                            <div style={{display:'flex', justifyContent:'space-between'}}>
+                            <div>
+                            <Link to={`/user/${article.author.username}`} >
+                            <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
+
+                            
+                            <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
+                            <a href='/user' className='home-page-link-style'>{article.author.username}</a>
+                            <span style={{    color: '#bbb',
+                            fontSize: '0.8rem',
+                            display: 'block'}}>
+                                    {article.createdAt}</span>
+                            </div>
+                            </div>
+
+                            <Button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}}   variant='outline-secondary' size='sm' >
+                            <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</Button>
+                            </div>
+                            
+
+
                             <h5>{article.title}</h5>
                             <p style={{color:'grey'}}>{article.description}</p>
 
@@ -59,7 +67,7 @@ const Home = () => {
                             <div style={{display:'flex', justifyContent:'space-between'}}>  
                             <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
                            
-                            <a href='/' style={tagStyle}>{article.tagList}</a> 
+                            <a href='/' className='home-page-tag-style'>{article.tagList}</a> 
                             </div>
                          
                              </div>
