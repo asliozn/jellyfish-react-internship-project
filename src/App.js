@@ -28,12 +28,13 @@ return (
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
-        <Route path="/editor" element={<Editor />} />
+      <Route path="/editor" element={<Editor />}>
+        <Route path="/editor/:articleSlug" element={<Editor />} />
+      </Route>
+
       <Route path="/settings" element={<Settings />} />
-       <Route path="/user" element={<ProfilePage/>}>
-        <Route path=":@userId" element={<ProfilePage />} />
-        </Route>
-        <Route path="/article/:articleSlug" element={<Article />} />
+      <Route path="/user/:userID" element={<ProfilePage />} />
+      <Route path="/article/:articleSlug" element={<Article />} />
 
     </Routes>
     </>
