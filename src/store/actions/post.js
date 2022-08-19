@@ -1,8 +1,6 @@
 import * as types from './types';
 import axios from 'axios';
 
-
-
 export const fetchPosts = () => async (dispatch) => {
 
     try {
@@ -18,6 +16,24 @@ export const fetchPosts = () => async (dispatch) => {
     }
     
 }
+
+export const fetchPostsByTag = (tag) => async (dispatch) => {
+
+    try {
+        const res = await fetch(`https://api.realworld.io/api/articles?tag=${tag}&limit=20&offset=0`);
+        const data = await res.json();
+        //console.log(data);
+        dispatch({
+        type: types.FETCH_POSTS_BY_TAG,
+        payload: data
+    });
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
 
 export const createArticle = (values) =>async (dispatch) => {
 
@@ -58,3 +74,44 @@ export const getArticlesByAuthor = (username) => async (dispatch) => {
       console.log(error);
   }
 }
+
+export const likeArticle = (slug) => async (dispatch) => {
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
+    console.log(user?.token)
+
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}`}
+      }
+      console.log(config)
+      console.log(user.token)
+    try {
+        const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/favorite`,config)
+        console.log(res.data)
+        dispatch({
+            type: types.LIKE_ARTICLE,
+            payload: res.data
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const unlikeArticle = (slug) => async (dispatch) => {
+    
+        const user = JSON.parse(localStorage.getItem('user'));
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}`}
+        }
+        try {
+            const response = await axios.delete('https://api.realworld.io/api/articles/'+slug+'/favorite',config)
+            console.log(response.data)
+            dispatch({
+                type: types.UNLIKE_ARTICLE,
+                payload: response.data
+            });
+        } catch (e) {
+            console.log(e)
+        }     
+    }

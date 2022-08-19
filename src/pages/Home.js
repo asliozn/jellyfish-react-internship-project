@@ -2,23 +2,44 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Pagination from 'react-bootstrap/Pagination';
 import Navbarjelly from '../components/Navbarjelly';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom'; 
-import Button from 'react-bootstrap/Button';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { likeArticle } from "../store/actions/post";
+import { useNavigate } from "react-router-dom";
+import {fetchPostsByTag} from '../store/actions/post';
 
 const Home = () => {
 
-
     const articleList = useSelector(state => state.post.posts.articles);
-    console.log(articleList);
     const tagList = useSelector(state => state.tag.tags.tags);
-    console.log(tagList);
+
+    const articleByTag = useSelector(state => state.post.posts.articles);
+
+    const user = localStorage.getItem('user');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [tagPage, setTagPage] = React.useState(false);
+    const [tagName, setTagName] = React.useState('');
+
+    const favoriteHandler = (slug) => {
+
+        user? dispatch(likeArticle(slug)): navigate('/login');
+        console.log(slug);
+    }
+
+    const tagHandler = (tag) => {
+            dispatch(fetchPostsByTag(tag));
+            setTagPage(true);
+            setTagName(tag);
+            console.log(tag);    
+        }
+
     return (
         <>   
-        <Navbarjelly />
+      <Navbarjelly /> 
 
 
         <div className="banner-style" >
@@ -30,59 +51,118 @@ const Home = () => {
         <Container style={{marginLeft:'10%', marginRight:'5%'}}>
 
             <Row>
-            <Col sm={9} xs={12}>
-                <div>                    
-                    <h5><a href="/" style={{ textDecoration: "none",color: '#6963AD'}} className='profile-page-anchor'>Global Feed </a></h5>
+            <Col md={9} sm={12} xs={12}>
+                <div>  
+                      <ul className="profile-page-list">
+ 
+                         <li style={{float: 'left',    display: 'list-item', }}>
+ 
+                           <a href="/" className= 'profile-page-anchor'>Global Feed </a>
+                         </li>
+ 
+                         <li style={{float: 'left',    display: 'list-item', }}>
+                         <a href="/" className= 'profile-page-anchor'>{tagName}</a>
+                         </li>
+ 
+                     </ul>  
 
-                    <article >
 
-                        { articleList?.map(article => (
-                            <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
+                    {tagPage? (
+                    
+                    <article style={{clear: 'both'}}>
 
-                            <div style={{display:'flex', justifyContent:'space-between'}}>
-                            <div>
-                            <Link to={`/user/${article.author.username}`} >
-                            <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
+                            { articleByTag?.map(article => (
+                                <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
 
+                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                <div>
+                                <Link to={`/user/${article.author.username}`} >
+                                <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
+
+                                
+                                <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
+                                <Link to={`/user/${article.author.username}`} className='home-page-link-style' >
+                                {article.author.username}</Link>
+
+                                <span style={{    color: '#bbb',
+                                fontSize: '0.8rem',
+                                display: 'block'}}>
+                                        {article.createdAt}</span>
+                                </div>
+                                </div>
+
+                                <button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.favoritesCount)}} >
+                                <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</button>
+                                </div>
+                                
+
+
+                                <h5>{article.title}</h5>
+                                <p style={{color:'grey'}}>{article.description}</p>
+
+
+                                <div style={{display:'flex', justifyContent:'space-between'}}>  
+                                <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
                             
-                            <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                            <a href='/user' className='home-page-link-style'>{article.author.username}</a>
-                            <span style={{    color: '#bbb',
-                            fontSize: '0.8rem',
-                            display: 'block'}}>
-                                    {article.createdAt}</span>
-                            </div>
-                            </div>
-
-                            <Button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}}   variant='outline-secondary' size='sm' >
-                            <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</Button>
-                            </div>
+                                <a href='/' className='home-page-tag-style'>{article.tagList}</a> 
+                                </div>
                             
+                                </div>
+                            ))}   
+                            </article>):(
+
+                            //global feed
+                            <article style={{clear: 'both'}}>
+
+                            { articleList?.map(article => (
+                                <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
+
+                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                <div>
+                                <Link to={`/user/${article.author.username}`} >
+                                <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
+
+                                
+                                <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
+                                <Link to={`/user/${article.author.username}`} className='home-page-link-style' >
+                                {article.author.username}</Link>
+
+                                <span style={{    color: '#bbb',
+                                fontSize: '0.8rem',
+                                display: 'block'}}>
+                                        {article.createdAt}</span>
+                                </div>
+                                </div>
+
+                                <button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.favoritesCount)}} >
+                                <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</button>
+                                </div>
+                                
 
 
-                            <h5>{article.title}</h5>
-                            <p style={{color:'grey'}}>{article.description}</p>
+                                <h5>{article.title}</h5>
+                                <p style={{color:'grey'}}>{article.description}</p>
 
 
-                            <div style={{display:'flex', justifyContent:'space-between'}}>  
-                            <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
-                           
-                            <a href='/' className='home-page-tag-style'>{article.tagList}</a> 
-                            </div>
-                         
-                             </div>
-                    ))}   
-                    </article>
+                                <div style={{display:'flex', justifyContent:'space-between'}}>  
+                                <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+                            
+                                <a href='/' className='home-page-tag-style'>{article.tagList}</a> 
+                                </div>
+                            
+                                </div>
+                            ))}   
+                            </article>)}
                 </div>
             </Col>
             
-            <Col sm={3} xs={12} >
+            <Col md={3} sm={12} xs={12} >
                 <div style={{backgroundColor:'#F1EAF6',width:'100%',textAlign:'center',paddingBottom:'15px',
                 color: '#6963AD', marginTop:'5%'}}>
                     <h6>Popular Tags</h6>
 
                    {tagList?.map(tags => (  
-                        <button key={tags.id} className='forHoverTag'>{tags}</button>
+                        <button key={tags.id} className='forHoverTag' onClick={() => { tagHandler(tags)}}>{tags}</button>
                     ))}   
 
                 </div>

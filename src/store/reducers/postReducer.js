@@ -27,6 +27,21 @@ export default function postReducer(state = initialState, action) {
                 ...state,
                 posts: action.payload
             };
+        case types.FETCH_POSTS_BY_TAG:
+            return {
+                ...state,
+                posts: action.payload
+            };
+        case types.LIKE_ARTICLE:
+            return {
+                ...state,
+                posts: action.payload
+            };
+        case types.UNLIKE_ARTICLE:
+            return {
+                ...state,
+                posts: action.payload
+            };
         default:
            return {...state,};
     }
