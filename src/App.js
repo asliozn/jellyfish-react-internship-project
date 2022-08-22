@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
   dispatch(fetchPosts());
   dispatch(fetchTags());
-  }, [dispatch]);
+  }, []);
   
 return (
     <>

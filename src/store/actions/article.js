@@ -15,3 +15,5 @@ export const fetchArticle = (slug) => async (dispatch) => {
         console.log(error);
     }
 }
+
+

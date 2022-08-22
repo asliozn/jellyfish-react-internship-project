@@ -20,9 +20,9 @@ const Home = () => {
     const user = localStorage.getItem('user');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [tagPage, setTagPage] = React.useState(false);
     const [tagName, setTagName] = React.useState('');
+
 
     const favoriteHandler = (slug) => {
 
@@ -66,11 +66,11 @@ const Home = () => {
  
                      </ul>  
 
+                    {/* <ArticleComp articles={articleByTag} favFunc={favoriteHandler} /> */}
 
-                    {tagPage? (
-                    
-                    <article style={{clear: 'both'}}>
 
+                    {tagPage? (                  
+                            <article style={{clear: 'both'}}>
                             { articleByTag?.map(article => (
                                 <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
 
@@ -100,16 +100,18 @@ const Home = () => {
                                 <h5>{article.title}</h5>
                                 <p style={{color:'grey'}}>{article.description}</p>
 
-
-                                <div style={{display:'flex', justifyContent:'space-between'}}>  
                                 <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
-                            
-                                <a href='/' className='home-page-tag-style'>{article.tagList}</a> 
+
+                                <div style={{display:'flex', justifyContent:'right'}}>  
+                                {article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                ))}
                                 </div>
-                            
+
                                 </div>
                             ))}   
-                            </article>):(
+                            </article>
+
+                    ):(
 
                             //global feed
                             <article style={{clear: 'both'}}>
@@ -137,17 +139,15 @@ const Home = () => {
                                 <button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.favoritesCount)}} >
                                 <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</button>
                                 </div>
-                                
-
 
                                 <h5>{article.title}</h5>
                                 <p style={{color:'grey'}}>{article.description}</p>
 
-
-                                <div style={{display:'flex', justifyContent:'space-between'}}>  
                                 <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
-                            
-                                <a href='/' className='home-page-tag-style'>{article.tagList}</a> 
+
+                                <div style={{display:'flex', justifyContent:'right'}}>  
+                                {article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                ))}
                                 </div>
                             
                                 </div>

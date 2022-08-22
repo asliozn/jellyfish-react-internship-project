@@ -25,7 +25,8 @@ export const addComment = (slug, comment) => async (dispatch) => {
     try {
         const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/comments`, comment,config);
         const data = await res.data;
-        console.log(data);
+        console.log(comment);
+
         dispatch({
             type: types.ADD_COMMENT,
             payload: data

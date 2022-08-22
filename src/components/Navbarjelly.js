@@ -12,9 +12,10 @@ const Navbarjelly = () => {
     textDecoration: "none",
     color: '#6963AD'
   };
-  const user = localStorage.getItem('user');
-  const user1 =JSON.parse(user);
+  
 
+  const user = localStorage.getItem('user');
+  const user1 = user? (JSON.parse(user)) : (null);
 
     return (
       <>
@@ -40,7 +41,7 @@ const Navbarjelly = () => {
         
         <li> <a href="/editor" style={linkStyle}>New Article </a></li>
           <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
-          <li> <Link to={`/user/${user1?.username}`} style={linkStyle}>{user1?.username}</Link></li>
+         <li> <Link to={`/user/${user1?.username}`} style={linkStyle}>{user1?.username}</Link></li>
           <li>
             <a href="/" style={linkStyle}>Home</a>
           </li>

@@ -1,12 +1,13 @@
-import axios from 'axios';
 import * as types from './types';
+import axios from 'axios';
+
 
 export const getCurrentUser = (user1) => async (dispatch) =>{
 
     const config = {
-        headers: { Authorization: `Bearer ${user1?.token}` }
-      }
-          try {
+        headers: { Authorization: `Bearer ${user1?.token}`      }
+    }
+    try {
               const res = await fetch('https://api.realworld.io/api/user', config);
               const data = await res.json();
                 dispatch({  
