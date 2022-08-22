@@ -1,6 +1,7 @@
 import * as types from './types';
 import axios from 'axios';
 
+
 export const fetchPosts = () => async (dispatch) => {
 
     try {
@@ -33,6 +34,15 @@ export const fetchPostsByTag = (tag) => async (dispatch) => {
 
 }
 
+var addItem = function (response) {
+    var oldItems = JSON.parse(localStorage.getItem('articles')) || [];
+    
+    var newItem = JSON.stringify(response.data);
+    
+    oldItems.push(newItem);
+    
+    localStorage.setItem('articles', JSON.stringify(oldItems));
+};
 
 
 export const createArticle = (values) =>async (dispatch) => {
@@ -50,7 +60,11 @@ export const createArticle = (values) =>async (dispatch) => {
     }
     try {
         const response = await axios.post('https://api.realworld.io/api/articles', payload1,config)
-        console.log(response.data)
+        console.log(response.data.article);
+        console.log(localStorage.getItem('articles'));
+        addItem(response);
+        console.log(localStorage.getItem('articles'));
+
         dispatch({
             type: types.CREATE_ARTICLE,
             payload: response.data

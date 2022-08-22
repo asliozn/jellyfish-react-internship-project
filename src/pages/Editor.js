@@ -16,14 +16,12 @@ import Alert from 'react-bootstrap/Alert';
 const Editor = () => {
 
   let { articleSlug } = useParams();
-  console.log(articleSlug);
   const dispatch = useDispatch();
+
 
   articleSlug = articleSlug ? articleSlug : "";
   dispatch(fetchArticle(articleSlug));
-
-      console.log(articleSlug+"articleSlug");
-      const article = useSelector(state => state.article.article.article);
+    const article = useSelector(state => state.article.article.article);
     const [success, setSuccess] = React.useState(false);
 
     const registerHandler = async (values, { setSubmitting }) => {      
@@ -31,7 +29,11 @@ const Editor = () => {
       dispatch(createArticle(values));
       setSuccess(true);
       setSubmitting(false);
+      
+       // const article1 = localStorage.getItem("article");
+        //console.log(article1? article1 : "no article");
   }
+
 
 return (
   <Formik
@@ -124,7 +126,7 @@ validationSchema={Yup.object().shape({
     </div>
 
     {success ? (<Alert variant="success" fade='false'>
-    Your article has been published! </Alert> ): (null)}
+    Your article has been published! </Alert>): (null)}
 
 
     </>
