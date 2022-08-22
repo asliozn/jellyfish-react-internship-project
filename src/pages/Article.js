@@ -5,32 +5,34 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbarjelly from '../components/Navbarjelly';
-import { useParams , Link} from 'react-router-dom';
+import { useParams , Link,useNavigate} from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux';
 import {fetchArticle} from '../store/actions/article';
 import { fetchCommentsBySlug,addComment,deleteComment } from '../store/actions/comment';
-
-      const user = JSON.parse(localStorage.getItem('user'));
-      console.log(user);
-
+import {Alert} from 'react-bootstrap';
+import { likeArticle } from '../store/actions/post';
+     
 const Article = () => {
 
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+
     let { articleSlug } = useParams();
-    console.log(articleSlug);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchArticle(articleSlug));
-        console.log(articleSlug+"articleSlug");
         dispatch(fetchCommentsBySlug(articleSlug));
-    } , [articleSlug, dispatch]);
+    } , []);
 
     const article = useSelector(state => state.article.article.article);
     const comments = useSelector(state => state.comment.comments.comments);
-    console.log(article);
+
 
         const [validated, setValidated] = useState(false);
         const [value, setValue] = useState();        
+        const [success, setSuccess] = React.useState(false);
+
         const onInput = ({target:{value}}) => setValue(value);
 
         const handleSubmit = (event) => {
@@ -40,9 +42,19 @@ const Article = () => {
             event.stopPropagation();
             }
             setValidated(true);
+            console.log(value);
             dispatch(addComment(articleSlug, value));
-          
+            setSuccess(true);
         };
+
+        const followHandler = (event) => {
+            user? (console.log("Followed")): navigate('/login');
+        }
+        
+        const favoriteHandler = (event) => {
+            user? dispatch(likeArticle(articleSlug)): navigate('/login');
+        }
+
 
     return (
         <>
@@ -52,25 +64,26 @@ const Article = () => {
                 
             <h1>{article?.title}</h1>
             <div>
-                <a href='/user'><img
-                src= {article?.author.image} className='home-page-image-style' alt="profile" /></a>
+                 <Link to={`/user/${article?.author.username}`} ><img
+                src= {article?.author.image} className='home-page-image-style' alt="profile" /></Link>
                 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                <a href='/user' className='home-page-link-style'>{article?.author.username}</a>
+                <Link to={`/user/${article?.author.username}`}  className='home-page-link-style'>{article?.author.username}</Link>
                 <span style={{    color: '#bbb',
                 fontSize: '0.8rem',
-                display: 'block'}}>
-                        {article?.createdAt}</span>
+                display: 'block'}}>  
+                        {article?.createdAt}
+                </span>
                 </div>
-                <Link  to={`/editor/${article?.slug}`}> Edit Article</Link>
 
-            {article?.author.username === user.username ? (<span>
-                <Link  to={`/editor/${article?.slug}`}> Edit Article</Link>
-                <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}}>Delete Article</Button>
+            {article?.author.username === user?.username ? 
+            (<span>
+                <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style' > Edit Article</Link>
+                <Button variant="outline-danger" size='sm'  style={{marginRight:'1rem'}}>Delete Article</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <button   className='article-buttons'> Favorite</button>
-                <button className='article-buttons'>Follow</button>
+                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> Favorite</button>
+                <button className='article-buttons' onClick={() => { followHandler()}}>Follow</button>
             </span>
             )}
 
@@ -107,19 +120,21 @@ const Article = () => {
                     {article?.createdAt}</span>
             </div>
 
-            {article?.author.username === user.username ? (<span>
-                <Link  to={`/editor/${article.slug}`}> Edit Article</Link>
+            {article?.author.username === user?.username ? (<span>
+                <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style'> Edit Article</Link>
                 <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}}>Delete Article</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <button   className='article-buttons'> Favorite</button>
-                <button className='article-buttons'>Follow</button>
+                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> Favorite</button>
+                <button className='article-buttons' onClick={() => { followHandler()}}>Follow</button>
             </span>
             )}
         </div>
 
 
            
+        {success ? (<Alert variant="success" fade='false'>
+                 Your comment has been published! </Alert> ): (null)}
 
 
            {user ? (
@@ -143,7 +158,7 @@ const Article = () => {
                 <Col>
 
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlID='validationCustom01'>
+                <Form.Group className="mb-3">
                  <Form.Control as="textarea" rows={3} 
                  placeholder='Write a comment...'
                  onChange={onInput} 
