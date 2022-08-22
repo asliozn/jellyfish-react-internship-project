@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, {useContext} from "react";
+import React, {useEffect} from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Formik } from "formik";
@@ -7,42 +7,47 @@ import * as Yup from "yup";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Navbarjelly from "../components/Navbarjelly";
-
-
-
+import {getCurrentUser} from "../store/actions/user";
+import {useDispatch, useSelector} from "react-redux";
 
 const Settings = () => {
   const navigate = useNavigate();
 
   const logout = async () => {
-    // if used in more components, this should be in context 
-    // axios to /logout endpoint 
     localStorage.removeItem("user");
     navigate('/');
 }
-  const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user);
+    const dispatch = useDispatch();
+
+  const user1 = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        dispatch(getCurrentUser(user1));
+    } , []);
+
+    const user = useSelector(state => state.user.user.user);
+
 
   const config = {
-    headers: { Authorization: `Bearer ${user.token}` }
+    headers: { Authorization: `Bearer ${user1.token}` }
   }
   
     const registerHandler = async (values, { setSubmitting }) => {
     const payload = {
       "user": {
         "email": values.email,
-        "token": `${user.token}`,
+        "token": `${user1.token}`,
         "username": values.username,
         "bio": values.bio,
         "image": values.url,
       }
   
-      // make payload here using values
     }
+    
     try {
       const response = await axios.put('https://api.realworld.io/api/user', payload,config)
       console.log(response.data)
-      navigate('/user')
+      navigate(`/user/${user?.username}`)
     } catch (e) {
       console.log(e)
     } finally {
@@ -110,7 +115,7 @@ validationSchema={Yup.object().shape({
             name="username"
             // eslint-disable-next-line no-template-curly-in-string
             className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
-            placeholder={user.username}
+            placeholder={user?.username}
             value={values.username}
             onChange={handleChange}
             onBlur={handleBlur} />
@@ -122,7 +127,7 @@ validationSchema={Yup.object().shape({
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Control as="textarea" rows={3} type="text" 
-            placeholder={user.bio}
+            placeholder={user?.bio}
             name="bio"
             className={'form-control mt-1 ${errors.bio && touched.bio && "error"}'}
             value={values.bio}
@@ -135,7 +140,7 @@ validationSchema={Yup.object().shape({
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Control type="email" placeholder={user.email}
+            <Form.Control type="email" placeholder={user?.email}
             name="email"
             className={'form-control mt-1 ${errors.email && touched.email && "error"}'}
             value={values.email}
