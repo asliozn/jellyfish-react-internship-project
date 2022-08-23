@@ -34,6 +34,7 @@ const Login = () => {
       console.log(response.data)
       //console.log(JSON.stringify(response));
       localStorage.setItem("user", JSON.stringify(response?.data?.user));
+      localStorage.setItem('token', JSON.stringify(response?.data?.user?.token));
       navigate('/')
   } catch (error) {
       if (!error?.response) {

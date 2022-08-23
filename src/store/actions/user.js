@@ -1,5 +1,4 @@
 import * as types from './types';
-import axios from 'axios';
 
 
 export const getCurrentUser = (user1) => async (dispatch) =>{
