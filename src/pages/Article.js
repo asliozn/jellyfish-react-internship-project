@@ -11,6 +11,7 @@ import {fetchArticle} from '../store/actions/article';
 import { fetchCommentsBySlug,addComment,deleteComment } from '../store/actions/comment';
 import {Alert} from 'react-bootstrap';
 import { likeArticle } from '../store/actions/post';
+import {deleteArticle} from '../store/actions/article';
      
 const Article = () => {
 
@@ -55,6 +56,14 @@ const Article = () => {
             user? dispatch(likeArticle(articleSlug)): navigate('/login');
         }
 
+        const deleteHandler = (event) => {
+            dispatch(deleteArticle(articleSlug))
+            setTimeout(function () {
+                navigate('/');
+            }, 1500);
+            
+        }
+
 
     return (
         <>
@@ -79,7 +88,7 @@ const Article = () => {
             {article?.author.username === user?.username ? 
             (<span>
                 <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style' > Edit Article</Link>
-                <Button variant="outline-danger" size='sm'  style={{marginRight:'1rem'}}>Delete Article</Button>
+                <Button variant="outline-danger" size='sm' onClick={() => { deleteHandler(article.slug)}} style={{marginRight:'1rem'}}>Delete Article</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
                 <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> Favorite</button>
