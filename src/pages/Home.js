@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import {fetchPostsByTag} from '../store/actions/post';
 import {fetchTags} from '../store/actions/tags';
 import {fetchPosts} from '../store/actions/post';
+import { getFollowFeed } from "../store/actions/post";
 
 const Home = () => {
     
@@ -27,11 +28,15 @@ const Home = () => {
 
     const articleByTag = useSelector(state => state.post.posts.articles);
 
+    const followFeed = useSelector(state => state.post.posts.articles);
+
     const user = localStorage.getItem('user');
     console.log(user);
     const navigate = useNavigate();
     const [tagPage, setTagPage] = React.useState(false);
     const [tagName, setTagName] = React.useState('');
+    const [followPage, setFollowPage] = React.useState(false);
+
 
 
     const favoriteHandler = (slug) => {
@@ -67,6 +72,14 @@ const Home = () => {
             setTagName(tag);
             console.log(tag);    
         }
+    const followHandler = () => {
+        dispatch(getFollowFeed());
+            setFollowPage(true);
+        }
+    const closeFollow = () => {
+        console.log("close");
+        setFollowPage(false);
+    }
 
     return (
         <>   
@@ -88,12 +101,20 @@ const Home = () => {
  
                          <li style={{float: 'left',    display: 'list-item', }}>
  
-                           <a href="/" className= 'profile-page-anchor'>Global Feed </a>
+                           <button className= 'profile-p-button' onClick={() => { closeFollow()}}>Global Feed </button>
                          </li>
  
                          <li style={{float: 'left',    display: 'list-item', }}>
                          <a href="/" className= 'profile-page-anchor'>{tagName}</a>
                          </li>
+
+                        {user ? 
+                        <li style={{float: 'left',    display: 'list-item', }}>
+                            <button  className= 'profile-p-button' onClick={() => {followHandler()}}>Following</button>
+                        </li> 
+                        : 
+                        null}
+
  
                      </ul>  
 
@@ -144,7 +165,110 @@ const Home = () => {
 
                     ):(
 
-                            //global feed
+                        user? (
+                            //global and follow 
+                            followPage? (
+                                <article style={{clear: 'both'}}>
+
+                            { followFeed?.map(article => (
+                                <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
+
+                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                <div>
+                                <Link to={`/user/${article.author.username}`} >
+                                <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
+
+                                
+                                <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
+                                <Link to={`/user/${article.author.username}`} className='home-page-link-style' >
+                                {article.author.username}</Link>
+
+                                <span style={{    color: '#bbb',
+                                fontSize: '0.8rem',
+                                display: 'block'}}>
+                                        {article.createdAt}</span>
+                                </div>
+                                </div>
+
+
+                                <div style={{display:'flex', justifyContent:'right'}}>
+                                <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
+                                <FavoriteIcon sx={{ color:'#AA86D5',  display: 'inline-block' }} /> {article.favoritesCount}</button>
+
+                                
+                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <HeartBrokenIcon sx={{ color:'#AA86D5',float:'left' }} /> Dislike</button>
+                                </div>
+
+
+                                </div>
+
+                                <h5>{article.title}</h5>
+                                <p style={{color:'grey'}}>{article.description}</p>
+
+                                <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+
+                                <div style={{display:'flex', justifyContent:'right'}}>  
+                                {article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                ))}
+                                </div>
+                                </div>
+                            ))}   
+                            </article>
+                            ):(
+                             <article style={{clear: 'both'}}>
+
+                            { articleList?.map(article => (
+                                <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
+
+                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                <div>
+                                <Link to={`/user/${article.author.username}`} >
+                                <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
+
+                                
+                                <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
+                                <Link to={`/user/${article.author.username}`} className='home-page-link-style' >
+                                {article.author.username}</Link>
+
+                                <span style={{    color: '#bbb',
+                                fontSize: '0.8rem',
+                                display: 'block'}}>
+                                        {article.createdAt}</span>
+                                </div>
+                                </div>
+
+
+                                <div style={{display:'flex', justifyContent:'right'}}>
+                                <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
+                                <FavoriteIcon sx={{ color:'#AA86D5',  display: 'inline-block' }} /> {article.favoritesCount}</button>
+
+                                
+                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <HeartBrokenIcon sx={{ color:'#AA86D5',float:'left' }} /> Dislike</button>
+                                </div>
+
+
+                                </div>
+
+                                <h5>{article.title}</h5>
+                                <p style={{color:'grey'}}>{article.description}</p>
+
+                                <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+
+                                <div style={{display:'flex', justifyContent:'right'}}>  
+                                {article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                ))}
+                                </div>
+                            
+                                </div>
+                            ))}   
+                            </article>
+                            )
+                            ):(
+
+
+                                //global feed
                             <article style={{clear: 'both'}}>
 
                             { articleList?.map(article => (
@@ -192,7 +316,11 @@ const Home = () => {
                             
                                 </div>
                             ))}   
-                            </article>)}
+                            </article>
+
+                            )
+                            
+                            )}
                 </div>
             </Col>
             
