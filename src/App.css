@@ -298,3 +298,22 @@
 
 }
 
+.profile-p-button{
+  border:none;
+  background:none;
+  color:   #6963AD   ;
+  float:   right   ;
+
+}
+
+.profile-p-button:hover{
+  color:   white   ;
+  background: #AA86D5;
+  border-radius: 25px;
+}
+
+.profile-p-button:focus{
+  border-bottom: 2px solid #6963AD ;
+}
+
+
