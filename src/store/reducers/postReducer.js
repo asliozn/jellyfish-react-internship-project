@@ -28,6 +28,16 @@ export default function postReducer(state = initialState, action) {
                 ...state,
                 posts: action.payload
             };
+        case types.GET_ARTICLES_BY_FAVORITED:
+            return {
+                ...state,
+                posts: action.payload
+            };
+        case types.GET_FOLLOW_FEED:
+            return {
+                ...state,
+                posts: action.payload
+            };        
         case types.FETCH_POSTS_BY_TAG:
             return {
                 ...state,

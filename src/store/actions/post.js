@@ -4,15 +4,34 @@ import axios from 'axios';
 
 export const fetchPosts = () => async (dispatch) => {
 
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
     try {
+
+        if  (user) {
+
+        const res = await fetch('https://api.realworld.io/api/articles?limit=50&offset=0',{
+            method: "GET",
+            headers: { Authorization: `Bearer ${user?.token}`}
+          });
+        const data = await res.json();
+        //console.log(data);
+        dispatch({
+        type: types.FETCH_POSTS,
+        payload: data
+    });}
+
+    else {
         const res = await fetch('https://api.realworld.io/api/articles?limit=20&offset=0');
         const data = await res.json();
         //console.log(data);
         dispatch({
         type: types.FETCH_POSTS,
         payload: data
-    });
-    } catch (error) {
+    });} 
+}
+    catch (error) {
         console.log(error);
     }
     
@@ -89,19 +108,64 @@ export const getArticlesByAuthor = (username) => async (dispatch) => {
   }
 }
 
+
+
+export const getFollowFeed = () => async (dispatch) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}`}
+    }
+    try {
+        const res = await fetch('https://api.realworld.io/api/articles/feed?limit=20&offset=0', config);
+        const data = await res.json();
+        //console.log(data);
+        dispatch({
+            type: types.GET_FOLLOW_FEED,
+            payload: data
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const getArticlesByFavorited = (username) => async (dispatch) => {
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}`}
+    }
+
+    try {
+        const res = await axios.get(`https://api.realworld.io/api/articles?favorited=${username}&limit=20&offset=0`,'',config);
+
+        const data = await res.data;
+        //console.log(data);
+        dispatch({
+            type: types.GET_ARTICLES_BY_FAVORITED,
+            payload: data
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
 export const likeArticle = (slug) => async (dispatch) => {
 
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user)
-    console.log(user?.token)
+ 
+    console.log(slug)
 
     const config = {
-        headers: { Authorization: `Bearer ${user.token}`}
+        headers: { Authorization: `Bearer ${user?.token}`}
       }
       console.log(config)
-      console.log(user.token)
+      console.log(user?.token)
     try {
-        const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/favorite`,config)
+        const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/favorite`,'',config)
         console.log(res.data)
         dispatch({
             type: types.LIKE_ARTICLE,
@@ -116,10 +180,10 @@ export const unlikeArticle = (slug) => async (dispatch) => {
     
         const user = JSON.parse(localStorage.getItem('user'));
         const config = {
-            headers: { Authorization: `Bearer ${user.token}`}
+            headers: { Authorization: `Bearer ${user?.token}`}
         }
         try {
-            const response = await axios.delete('https://api.realworld.io/api/articles/'+slug+'/favorite',config)
+            const response = await axios.delete(`https://api.realworld.io/api/articles/${slug}/favorite`,config)
             console.log(response.data)
             dispatch({
                 type: types.UNLIKE_ARTICLE,
