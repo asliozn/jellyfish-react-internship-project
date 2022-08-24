@@ -1,0 +1,33 @@
+{
+    "home":"Ana Sayfa",
+    "sign-in":"Giriş Yap",
+    "sign-up":"Kayıt Ol",
+    "sign-out":"Çıkış Yap",
+    "new-article":"Yeni Makale",
+    "settings":"Ayarlar",
+    "banner": "Düşüncelerinizi paylaşabilmek için bir yer!",
+    "g-feed": "Küresel Yayın?",
+    "r-more":"Okumaya devam et",
+    "p-tags":"Popüler Etiketler",
+    "fav":"Favorile",
+    "follow":"Takip Et",
+    "unfollow":"Takipten Çık",
+    "edit":"Yazıyı Düzenle",
+    "delete":"Yazıyı Sil",
+    "signup-error":"Bu makaleye yorum eklemek için oturum açın veya kaydolun.",
+    "login-error":"Lütfen giriş yapınız!",
+    "already-registered":"Hesabınız var mı?",
+    "n-registered":"Hesabınız yok mu?",
+    "u-name":"Kullanıcı Adı",
+    "u-email":"E-posta",
+    "u-password":"Parola",
+    "h-p-follow":"Takip Edilenler",
+    "p-comment":"Yorum Paylaş",
+    "n-article":"Makaleyi Yayınla",
+    "n-article-alert":"Makaleniz yayımlandı!",
+    "u-settings":"Profili Güncelle",
+    "f-articles":"Favori Makalelerim",
+    "m-articles":"Makalelerim"
+
+
+  }
