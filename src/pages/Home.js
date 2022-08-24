@@ -144,7 +144,11 @@ const Home = () => {
                                 </div>
 
                                 <button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
-                                <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</button>
+                                <FavoriteIcon className="icon" /> {article.favoritesCount}</button>
+
+                                
+                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <HeartBrokenIcon className="icon" /> Dislike</button>
                                 </div>
                                 
 
@@ -193,11 +197,13 @@ const Home = () => {
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
                                 <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
-                                <FavoriteIcon sx={{ color:'#AA86D5',  display: 'inline-block' }} /> {article.favoritesCount}</button>
+
+                               <FavoriteIcon className="icon" />{article.favoritesCount}</button>
 
                                 
                                 <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
-                                <HeartBrokenIcon sx={{ color:'#AA86D5',float:'left' }} /> Dislike</button>
+                                <HeartBrokenIcon className="icon" /> Dislike</button>
+
                                 </div>
 
 
@@ -240,12 +246,12 @@ const Home = () => {
 
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
-                                <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
-                                <FavoriteIcon sx={{ color:'#AA86D5',  display: 'inline-block' }} /> {article.favoritesCount}</button>
+                                <button style={{color:'#AA86D5',border:'1px solid #AA86D5',background:'none'}} onClick={() => { favoriteHandler(article.slug)}} >
+                               <FavoriteIcon className="icon" /> {article.favoritesCount} </button>
 
                                 
-                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
-                                <HeartBrokenIcon sx={{ color:'#AA86D5',float:'left' }} /> Dislike</button>
+                                <button style={{marginLeft:'2%',color:'#AA86D5',border:'1px solid #AA86D5',background:'none'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <HeartBrokenIcon className="icon" /> Dislike</button>
                                 </div>
 
 
@@ -266,8 +272,6 @@ const Home = () => {
                             </article>
                             )
                             ):(
-
-
                                 //global feed
                             <article style={{clear: 'both'}}>
 
@@ -294,11 +298,11 @@ const Home = () => {
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
                                 <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
-                                <FavoriteIcon sx={{ color:'#AA86D5',  display: 'inline-block' }} /> {article.favoritesCount}</button>
+                                <FavoriteIcon className="icon"/> {article.favoritesCount}</button>
 
                                 
                                 <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
-                                <HeartBrokenIcon sx={{ color:'#AA86D5',float:'left' }} /> Dislike</button>
+                                <HeartBrokenIcon className="icon" /> Dislike</button>
                                 </div>
 
 
