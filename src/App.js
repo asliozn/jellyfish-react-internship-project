@@ -11,6 +11,8 @@ import Article from './pages/Article';
 import {useDispatch} from 'react-redux';
 import {fetchPosts} from './store/actions/post';
 import {fetchTags} from './store/actions/tags';
+import JellyFooter from './components/footer';
+
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
   dispatch(fetchPosts());
   dispatch(fetchTags());
   }, []);
+
   
 return (
     <>
@@ -37,23 +40,12 @@ return (
       <Route path="/article/:articleSlug" element={<Article />} />
 
     </Routes>
-    </>
+   
+   <JellyFooter />
+    
+     </>
     
   );
 }
-
-/*<Routes> 
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<SignUp />} />
-        <Route path="/editor" element={<Editor />} />
-      <Route path="/settings" element={<Settings />} />
-       <Route path="/user" element={<ProfilePage/>}>
-        <Route path=":@userId" element={<ProfilePage />} />
-        </Route>
-      <Route path="/article" element={<Article/>}>
-        <Route path=":articleSlug" element={<Article />} />
-        </Route>
-    </Routes>*/
 
 export default App;
