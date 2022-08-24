@@ -35,7 +35,7 @@ const ProfilePage = () => {
         const dispatch = useDispatch();
         
         useEffect(() => {
-                //dispatch(getCurrentUser(user1));
+                dispatch(getCurrentUser(user1));
                 dispatch(getProfile(userID));
 
                 userID === user1?.username ? (
@@ -59,7 +59,7 @@ const ProfilePage = () => {
 
             const favoritedArticles = useSelector(state => state.post.posts.articles);
          
-            //const user = useSelector(state => state.user.user.user);
+            const user = useSelector(state => state.user.user.user);
             const profile = useSelector(state => state.profile.profile.profile);
             const articles = useSelector(state =>  state.post.posts.articles);
 
@@ -86,8 +86,8 @@ const ProfilePage = () => {
              <div className="row">
                  <div className="col-md-12">
                  <img src='https://ps.w.org/metronet-profile-picture/assets/icon-256x256.png?rev=2464419' className='profile-page-image-style' alt="profile picture" />
-                     <h4>{user1?.username}</h4>
-                     <p>{user1?.bio}</p>
+                     <h4>{user?.username}</h4>
+                     <p>{user?.bio}</p>
  
  
                  <Link to="/settings" className='profile-page-link-style'> {t('settings')}</Link>

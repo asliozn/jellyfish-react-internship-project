@@ -113,7 +113,7 @@ validationSchema={Yup.object().shape({
             )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
             <Form.Control type="text" 
             name="username"
             // eslint-disable-next-line no-template-curly-in-string
@@ -142,7 +142,7 @@ validationSchema={Yup.object().shape({
          
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
             <Form.Control type="email" placeholder={user?.email}
             name="email"
             className={'form-control mt-1 ${errors.email && touched.email && "error"}'}
@@ -154,7 +154,7 @@ validationSchema={Yup.object().shape({
             )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
             <Form.Control type="password" 
             placeholder="New Password"
             name="password"

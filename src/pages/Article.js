@@ -8,7 +8,7 @@ import Navbarjelly from '../components/Navbarjelly';
 import { useParams , Link,useNavigate} from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux';
 import {fetchArticle} from '../store/actions/article';
-import { fetchCommentsBySlug,addComment,deleteComment } from '../store/actions/comment';
+import { fetchCommentsBySlug,addComment} from '../store/actions/comment';
 import {Alert} from 'react-bootstrap';
 import { likeArticle } from '../store/actions/post';
 import {deleteArticle} from '../store/actions/article';
@@ -124,11 +124,11 @@ const Article = () => {
            {/*ikinci profil kısmı ortadaki*/ }
 
            <div style={{display: 'flex',justifyContent: 'center',marginBottom:'4%'}}>
-            <Link to='/user'><img
+            <Link to={`/user/${article?.author.username}`}><img
             src= {article?.author.image} className='home-page-image-style' alt="profile" /></Link>
             
             <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-            <Link to='/user' className='home-page-link-style'>{article?.author.username}</Link>
+            <Link to={`/user/${article?.author.username}`} className='home-page-link-style'>{article?.author.username}</Link>
             <span style={{    color: '#bbb',
             fontSize: '0.8rem',
              display: 'block'}}>
@@ -157,7 +157,7 @@ const Article = () => {
 
                 <div>
                             
-                <Link to='/user'><img
+                <Link to={`/user/${article?.author.username}`}><img
                 src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" className='home-page-image-style' alt="profile" /></Link>
 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
