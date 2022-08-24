@@ -33,7 +33,7 @@ const Home = () => {
     const followFeed = useSelector(state => state.post.posts.articles);
 
     const user = localStorage.getItem('user');
-    console.log(user);
+
     const navigate = useNavigate();
     const [tagPage, setTagPage] = React.useState(false);
     const [tagName, setTagName] = React.useState('');
