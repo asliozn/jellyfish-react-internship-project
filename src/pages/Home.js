@@ -7,12 +7,9 @@ import {useSelector,useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom'; 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
-import { likeArticle, unlikeArticle } from "../store/actions/post";
 import { useNavigate } from "react-router-dom";
-import {fetchPostsByTag} from '../store/actions/post';
 import {fetchTags} from '../store/actions/tags';
-import {fetchPosts} from '../store/actions/post';
-import { getFollowFeed } from "../store/actions/post";
+import {fetchPosts,getFollowFeed,fetchPostsByTag,likeArticle, unlikeArticle } from '../store/actions/post';
 
 const Home = () => {
     
@@ -143,11 +140,11 @@ const Home = () => {
                                 </div>
                                 </div>
 
-                                <button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
+                                <button className='like-button' onClick={() => { favoriteHandler(article.slug)}} >
                                 <FavoriteIcon className="icon" /> {article.favoritesCount}</button>
 
                                 
-                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <button className='dislike-button' onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" /> Dislike</button>
                                 </div>
                                 
@@ -196,12 +193,12 @@ const Home = () => {
 
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
-                                <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
+                                <button className='like-button' onClick={() => { favoriteHandler(article.slug)}} >
 
                                <FavoriteIcon className="icon" />{article.favoritesCount}</button>
 
                                 
-                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <button className='dislike-button' onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" /> Dislike</button>
 
                                 </div>
@@ -246,11 +243,11 @@ const Home = () => {
 
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
-                                <button style={{color:'#AA86D5',border:'1px solid #AA86D5',background:'none'}} onClick={() => { favoriteHandler(article.slug)}} >
+                                <button className='like-button' onClick={() => { favoriteHandler(article.slug)}} >
                                <FavoriteIcon className="icon" /> {article.favoritesCount} </button>
 
                                 
-                                <button style={{marginLeft:'2%',color:'#AA86D5',border:'1px solid #AA86D5',background:'none'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <button className='dislike-button' onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" /> Dislike</button>
                                 </div>
 
@@ -297,11 +294,11 @@ const Home = () => {
 
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
-                                <button style={{color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { favoriteHandler(article.slug)}} >
+                                <button className='like-button' onClick={() => { favoriteHandler(article.slug)}} >
                                 <FavoriteIcon className="icon"/> {article.favoritesCount}</button>
 
                                 
-                                <button style={{marginLeft:'2%',color:'#AA86D5',borderColor:'#AA86D5'}} onClick={() => { unfavoriteHandler(article.slug)}} >
+                                <button className='dislike-button' onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" /> Dislike</button>
                                 </div>
 

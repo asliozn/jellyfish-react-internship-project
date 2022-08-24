@@ -321,3 +321,11 @@
   color : #AA86D5 ;
 }
 
+.dislike-button{
+  margin-left:2%;
+  color:#AA86D5;
+  border-color:#AA86D5;
+}
+
+.like-button {color:#AA86D5; border-color:#AA86D5;}
+
