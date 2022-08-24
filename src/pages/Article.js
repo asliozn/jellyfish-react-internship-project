@@ -12,11 +12,17 @@ import { fetchCommentsBySlug,addComment,deleteComment } from '../store/actions/c
 import {Alert} from 'react-bootstrap';
 import { likeArticle } from '../store/actions/post';
 import {deleteArticle} from '../store/actions/article';
+import { useTranslation } from 'react-i18next';
+
      
 const Article = () => {
 
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
+
+
+    const { t } = useTranslation();
+
 
     let { articleSlug } = useParams();
     const dispatch = useDispatch();
@@ -87,12 +93,12 @@ const Article = () => {
 
             {article?.author.username === user?.username ? 
             (<span>
-                <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style' > Edit Article</Link>
-                <Button variant="outline-danger" size='sm' onClick={() => { deleteHandler(article.slug)}} style={{marginRight:'1rem'}}>Delete Article</Button>
+                <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style' > {t('edit')}</Link>
+                <Button variant="outline-danger" size='sm' onClick={() => { deleteHandler(article.slug)}} style={{marginRight:'1rem'}}> {t('delete')}</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> Favorite</button>
-                <button className='article-buttons' onClick={() => { followHandler()}}>Follow</button>
+                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> {t('fav')}</button>
+                <button className='article-buttons' onClick={() => { followHandler()}}>{t('follow')}</button>
             </span>
             )}
 
@@ -118,11 +124,11 @@ const Article = () => {
            {/*ikinci profil kısmı ortadaki*/ }
 
            <div style={{display: 'flex',justifyContent: 'center',marginBottom:'4%'}}>
-            <a href='/user'><img
-            src= {article?.author.image} className='home-page-image-style' alt="profile" /></a>
+            <Link to='/user'><img
+            src= {article?.author.image} className='home-page-image-style' alt="profile" /></Link>
             
             <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-            <a href='/user' className='home-page-link-style'>{article?.author.username}</a>
+            <Link to='/user' className='home-page-link-style'>{article?.author.username}</Link>
             <span style={{    color: '#bbb',
             fontSize: '0.8rem',
              display: 'block'}}>
@@ -130,12 +136,12 @@ const Article = () => {
             </div>
 
             {article?.author.username === user?.username ? (<span>
-                <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style'> Edit Article</Link>
-                <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}}>Delete Article</Button>
+                <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style'> {t('edit')}</Link>
+                <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}} onClick={() => { deleteHandler(article.slug)}}> {t('delete')}</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> Favorite</button>
-                <button className='article-buttons' onClick={() => { followHandler()}}>Follow</button>
+                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}>  {t('fav')}</button>
+                <button className='article-buttons' onClick={() => { followHandler()}}> {t('follow')}</button>
             </span>
             )}
         </div>
@@ -151,11 +157,11 @@ const Article = () => {
 
                 <div>
                             
-                <a href='/user'><img
-                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" className='home-page-image-style' alt="profile" /></a>
+                <Link to='/user'><img
+                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" className='home-page-image-style' alt="profile" /></Link>
 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                <a href='/user' className='home-page-link-style'>{user?.username}</a>
+                <Link to={`/user/${user?.username}`} className='home-page-link-style'>{user?.username}</Link>
                 <span style={{    color: '#bbb',
                 fontSize: '0.8rem',
                 display: 'block'}}>
@@ -179,7 +185,7 @@ const Article = () => {
                  </Form.Group>
                  <Button variant="primary" type="submit" 
                  style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right', marginBottom:'2%'}}>
-                    Post Comment
+                   {t('p-comment')}
                 </Button>
                 </Form>
                 
@@ -189,7 +195,7 @@ const Article = () => {
             </>
       
           ):(  <span>
-            <p style={{color:'red', textAlign:'center'}}>Sign in or sign up to add comments on this article.</p>
+            <p style={{color:'red', textAlign:'center'}}>{t('signup-error')}</p>
         </span>
         )}
         
@@ -201,10 +207,10 @@ const Article = () => {
                     {comments?.map(comment => (
                         <div style={{border: '1px solid #e5e5e5'}}key={comment.id}>
                             <div>
-                                <a href='/user'><img
-                                src={comment?.author.image}  className='home-page-image-style' alt="profile" /></a>
+                                <Link to='/user'><img
+                                src={comment?.author.image}  className='home-page-image-style' alt="profile" /></Link>
                                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>
-                                <a href='/user' className='home-page-link-style'>{comment.author.username}</a>
+                                <Link to='/user' className='home-page-link-style'>{comment.author.username}</Link>
                                 <span style={{    color: '#bbb',
                                 fontSize: '0.8rem',
                                     display: 'block'}}>

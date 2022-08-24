@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Navbarjelly from "../components/Navbarjelly";
+import { useTranslation } from 'react-i18next';
 
 
 const linkStyle = {
@@ -15,6 +16,8 @@ const linkStyle = {
   };
   
 const Login = () => {
+  const { t } = useTranslation();
+
 
   const [error, setError] = useState(false);
 
@@ -85,13 +88,13 @@ const Login = () => {
         <div className="Auth-form-container">
             <form className="Auth-form"onSubmit={handleSubmit} >
                 <div className="Auth-form-content">
-                    <h3 className="Auth-form-title">Sign In</h3>
+                    <h3 className="Auth-form-title">{t('sign-in')}</h3>
                     <div className="text-center">
-                        Not registered?{" "}
-                        <Link to="/register" style={linkStyle}>Sign Up</Link>
+                    {t('n-registered')}{" "}
+                        <Link to="/register" style={linkStyle}>{t('sign-up')}</Link>
                     </div>
                     <div className="form-group mt-3">
-                        <label>Email address</label>
+                        <label>{t('u-email')}</label>
                         <input
                             type="email"
                             name="email"
@@ -107,7 +110,7 @@ const Login = () => {
                     </div>
 
                     <div className="form-group mt-3">
-                        <label>Password</label>
+                        <label>{t('u-password')}</label>
                         <input
                             type="password"
                             name="password"
@@ -123,7 +126,7 @@ const Login = () => {
                     </div>
                     <div className="d-grid gap-2 mt-3">
                         <button type="submit" className="btn btn-primary" style={{backgroundColor:'#6963AD', borderColor:'#6963AD'}}>
-                            Submit
+                        {t('sign-in')}
                         </button>
                     </div>
                 </div>

@@ -9,9 +9,12 @@ import { useNavigate } from "react-router-dom";
 import Navbarjelly from "../components/Navbarjelly";
 import {getCurrentUser} from "../store/actions/user";
 import {useDispatch, useSelector} from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Settings = () => {
   const navigate = useNavigate();
+
+  const {t} = useTranslation();
 
   const logout = async () => {
     localStorage.removeItem("user");
@@ -165,11 +168,12 @@ validationSchema={Yup.object().shape({
             </Form.Group>
 
             <Button variant="primary" type="submit" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}>
-            Update Settings
+              {t('u-settings')}
             </Button>
         </Form>
 
-        <Button style={{color: '#B85C5C',backgroundColor: 'transparent', borderColor: '#B85C5C'}} onClick={logout}> Click here to logout!</Button>
+        <Button style={{color: '#B85C5C',backgroundColor: 'transparent', borderColor: '#B85C5C'}} onClick={logout}> 
+        {t('sign-out')} </Button>
 
         </div>
         </>

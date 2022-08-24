@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Navbarjelly from "../components/Navbarjelly";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -16,6 +17,8 @@ const linkStyle = {
   };
 
 const SignUp = () => {
+  const { t } = useTranslation();
+
   let navigate = useNavigate();
 
   const registerHandler = async (values, { setSubmitting }) => {
@@ -80,13 +83,13 @@ const SignUp = () => {
       <div className="Auth-form-container">
       <form className="Auth-form"onSubmit={handleSubmit}>
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign Up</h3>
+          <h3 className="Auth-form-title">{t('sign-up')}</h3>
           <div className="text-center">
-            Already registered?{" "}
-            <Link to="/login" style={linkStyle}>Sign In</Link>
+          {t('already-registered')}{" "}
+            <Link to="/login" style={linkStyle}>{t('sign-in')}</Link>
           </div>
           <div className="form-group mt-3">
-            <label>Username</label>
+            <label>{t('u-name')}</label>
             <input
               type="text"
               name="username"
@@ -101,7 +104,7 @@ const SignUp = () => {
             )}
           </div>
           <div className="form-group mt-3">
-            <label>Email address</label>
+            <label>{t('u-email')}</label>
             <input
               type="email"
               name="email"
@@ -118,7 +121,7 @@ const SignUp = () => {
 
 
           <div className="form-group mt-3">
-            <label>Password</label>
+            <label>{t('u-password')}</label>
             <input
               type="password"
               name="password"
@@ -135,7 +138,7 @@ const SignUp = () => {
           </div>
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-primary" style={{backgroundColor:'#6963AD', borderColor:'#6963AD'}}>
-              Submit
+            {t('sign-up')}
             </button>
           </div>
         </div>

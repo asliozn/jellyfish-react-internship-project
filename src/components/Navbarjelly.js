@@ -1,9 +1,15 @@
 import React,{useState} from "react";
 import logo from "./images/jellyfish_logo.png";
 import {Link} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 
 
 const Navbarjelly = () => {
+
+    const { t } = useTranslation();
+
+
   
   const [isNavExpanded, setIsNavExpanded] = useState(false)
 
@@ -20,8 +26,8 @@ const Navbarjelly = () => {
     return (
       <>
       <nav className="navigation">
-      <a href="/" style={{marginLeft:'4%'}}>
-      <img src={logo} width={100} height={50} alt='Logo' /> </a>
+      <Link to="/" style={{marginLeft:'4%'}}>
+      <img src={logo} width={100} height={50} alt='Logo' /> </Link>
       
       <button
         className="hamburger"
@@ -38,24 +44,25 @@ const Navbarjelly = () => {
         >
 
     {user ? ( <ul>
-        
-        <li> <a href="/editor" style={linkStyle}>New Article </a></li>
-          <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
+
+            
+        <li> <Link to="/editor" style={linkStyle}>{t('new-article')} </Link></li>
+          <li>  <Link to="/settings" style={linkStyle}>{t('settings')}</Link></li>
          <li> <Link to={`/user/${user1?.username}`} style={linkStyle}>{user1?.username}</Link></li>
           <li>
-            <a href="/" style={linkStyle}>Home</a>
+            <Link to="/" style={linkStyle}>{t('home')}</Link>
           </li>
 
         </ul> ):(
          <ul>
             <li>
-              <a href="/" style={linkStyle}>Home</a>
+              <Link to="/" style={linkStyle}>{t('home')}</Link>
             </li>
             <li>
-              <a href="/login" style={linkStyle}>Sign In</a>
+              <Link to="/login" style={linkStyle}>{t('sign-in')}</Link>
             </li>
             <li>
-             <a href="/register" style={linkStyle}>Sign Up</a>
+             <Link to="/register" style={linkStyle}>{t('sign-up')}</Link>
             </li>
 
           </ul>)}
@@ -67,33 +74,5 @@ const Navbarjelly = () => {
     );
 }
 
-/*{auth?.accessToken ? (
-          <>
-         <ul>
-        
-          <li> <a href="/editor" style={linkStyle}>New Article</a></li>
-            <li>  <a href="/settings" style={linkStyle}>Settings</a></li>
-            <li> <a href="/user" style={linkStyle}>Profile</a></li>
-
-          </ul>
-          </>
-         
-        
-        ) : ( 
-          
-          <ul>
-            <li>
-              <a href="/" style={linkStyle}>Home</a>
-            </li>
-            <li>
-              <a href="/login" style={linkStyle}>Sign In</a>
-            </li>
-            <li>
-             <a href="/register" style={linkStyle}>Sign Up</a>
-            </li>
-
-          </ul>
-       
-        )}   */
 
 export default Navbarjelly;

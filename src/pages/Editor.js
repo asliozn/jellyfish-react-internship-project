@@ -10,6 +10,7 @@ import {createArticle} from '../store/actions/post';
 import { fetchArticle } from "../store/actions/article";
 import { useParams } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
+import { useTranslation } from "react-i18next";
 
 
 
@@ -17,7 +18,8 @@ const Editor = () => {
 
   let { articleSlug } = useParams();
   const dispatch = useDispatch();
-
+  
+  const { t } = useTranslation();
 
   articleSlug = articleSlug ? articleSlug : "";
   dispatch(fetchArticle(articleSlug));
@@ -120,13 +122,12 @@ validationSchema={Yup.object().shape({
       </Form.Group>
       
       <Button variant="primary" type="submit" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}>
-        Publish Article
-      </Button>
+      {t('n-article')}      </Button>
     </Form>
     </div>
 
     {success ? (<Alert variant="success" fade='false'>
-    Your article has been published! </Alert>): (null)}
+    {t('n-article-alert')} </Alert>): (null)}
 
 
     </>

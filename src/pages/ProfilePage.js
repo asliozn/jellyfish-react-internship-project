@@ -14,11 +14,14 @@ import {Link} from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {followUser,unfollowUser} from "../store/actions/profile";
 import { getArticlesByFavorited } from "../store/actions/post";
+import { useTranslation } from "react-i18next";
 
 const ProfilePage = () => {
         
 
         let { userID } = useParams();
+
+        const { t } = useTranslation();
 
         const [favPage, setFavPage] = React.useState(false);
 
@@ -35,7 +38,7 @@ const ProfilePage = () => {
                 //dispatch(getCurrentUser(user1));
                 dispatch(getProfile(userID));
 
-                userID === user1.username ? (
+                userID === user1?.username ? (
                 dispatch(getArticlesByAuthor(user1.username))
                 ) : (
                 dispatch(getArticlesByAuthor(userID))
@@ -87,7 +90,7 @@ const ProfilePage = () => {
                      <p>{user1?.bio}</p>
  
  
-                 <a href="/settings" className='profile-page-link-style'> Go to Settings</a>
+                 <Link to="/settings" className='profile-page-link-style'> {t('settings')}</Link>
                 
              </div>
          </div>
@@ -102,11 +105,11 @@ const ProfilePage = () => {
  
                          <li style={{float: 'left',   display: 'list-item' }}>
  
-                           <button className='profile-p-button' onClick={() => { closeFavPage()}}>My Articles </button>
+                           <button className='profile-p-button' onClick={() => { closeFavPage()}}>{t('m-articles')} </button>
                          </li>
  
                          <li style={{float: 'left',    display: 'list-item', }}>
-                         <button className='profile-p-button'  onClick={() => { favPageHandler(user1?.username)}} >Favorited Articles</button>
+                         <button className='profile-p-button'  onClick={() => { favPageHandler(user1?.username)}} >{t('f-articles')}</button>
                          </li>
  
                      </ul>
@@ -123,7 +126,7 @@ const ProfilePage = () => {
 
                                     
                                     <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                                    <a href='/user' className='home-page-link-style'>{article.author.username}</a>
+                                    <Link to='/user' className='home-page-link-style'>{article.author.username}</Link>
                                     <span style={{    color: '#bbb',
                                     fontSize: '0.8rem',
                                     display: 'block'}}>
@@ -142,10 +145,10 @@ const ProfilePage = () => {
 
 
                                     <div style={{display:'flex', justifyContent:'space-between'}}>  
-                                    <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+                                    <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >{t('r-more')}</Link>
 
                                     <div style={{display:'flex', justifyContent:'right'}}>  
-                                    {article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                    {article.tagList.map(tag => ( <Link to='/' key={tag.id} className='home-page-tag-style'>{tag}</Link>
                                     ))}
                                     </div>                                            
                                     </div>
@@ -167,7 +170,7 @@ const ProfilePage = () => {
 
                                     
                                     <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                                    <a href='/user' className='home-page-link-style'>{JSON.parse(article).article.author.username}</a>
+                                    <Link to='/user' className='home-page-link-style'>{JSON.parse(article).article.author.username}</Link>
                                     <span style={{    color: '#bbb',
                                     fontSize: '0.8rem',
                                     display: 'block'}}>
@@ -186,10 +189,10 @@ const ProfilePage = () => {
 
 
                                     <div style={{display:'flex', justifyContent:'space-between'}}>  
-                                    <Link to={`/article/${JSON.parse(article).article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+                                    <Link to={`/article/${JSON.parse(article).article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >{t('r-more')}</Link>
 
                                     <div style={{display:'flex', justifyContent:'right'}}>  
-                                    {JSON.parse(article).article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                    {JSON.parse(article).article.tagList.map(tag => ( <Link to='/' key={tag.id} className='home-page-tag-style'>{tag}</Link>
                                     ))}
                                     </div>                                            
                                     </div>
@@ -213,8 +216,8 @@ const ProfilePage = () => {
                             <img src={profile?.image} className='profile-page-image-style' alt="profile picture" />
                                 <h4>{profile?.username}</h4>
                                 <p>{profile?.bio}</p>  
-                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { followHandler(profile?.username)}}>Follow</Button>
-                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>Unfollow </Button>
+                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { followHandler(profile?.username)}}>{t('follow')}</Button>
+                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
 
                         </div>
                     </div>
@@ -226,7 +229,7 @@ const ProfilePage = () => {
                         <div>
                             <ul className="profile-page-list">
                                 <li style={{float: 'left',    display: 'list-item', }}>
-                                    <a href="/" className= 'profile-page-anchor'>Global Feed </a>
+                                    <Link to="/" className= 'profile-page-anchor'>{t('g-feed')}</Link>
                                 </li>
                             </ul>
                             <article style={{borderTop:' 1px solid rgba(0,0,0,0.1)',clear: 'both'}}>
@@ -241,7 +244,7 @@ const ProfilePage = () => {
 
                                             
                                             <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                                            <a href='/user' className='home-page-link-style'>{article.author.username}</a>
+                                            <Link to='/user' className='home-page-link-style'>{article.author.username}</Link>
                                             <span style={{    color: '#bbb',
                                             fontSize: '0.8rem',
                                             display: 'block'}}>
@@ -260,10 +263,10 @@ const ProfilePage = () => {
 
 
                                             <div style={{display:'flex', justifyContent:'space-between'}}>  
-                                            <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >Read More</Link>
+                                            <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >{t('r-more')}</Link>
                                         
                                             <div style={{display:'flex', justifyContent:'right'}}>  
-                                            {article.tagList.map(tag => ( <a href='/' key={tag.id} className='home-page-tag-style'>{tag}</a>
+                                            {article.tagList.map(tag => ( <Link to='/' key={tag.id} className='home-page-tag-style'>{tag}</Link>
                                             ))}
                                             </div>                                            
                                             </div>
@@ -286,15 +289,15 @@ const ProfilePage = () => {
                             <img src={profile?.image} className='profile-page-image-style' alt="profile picture" />
                                 <h4>{profile?.username}</h4>
                                 <p>{profile?.bio}</p>
-                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}onClick={() => { followHandler(profile?.username)}}>Follow </Button>
-                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>Unfollow </Button>
+                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}onClick={() => { followHandler(profile?.username)}}>{t('follow')} </Button>
+                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
 
                         </div>
                     </div>
                 </div>      
             
-            <p>You are not logged in</p>
-            <a href="/login" className= 'profile-page-anchor'>Login</a>
+            <p>{t('login-error')}</p>
+            <Link to="/login" className= 'profile-page-anchor'>{t('sign-in')}</Link>
             </>
 
 
