@@ -28,7 +28,15 @@
     "u-settings":"Profili Güncelle",
     "f-articles":"Favori Makalelerim",
     "m-articles":"Makalelerim",
-    "l-page":"Giriş sayfasına git"
+    "l-page":"Giriş sayfasına git",
+    "u-pic":"Profil fotoğrafınızın url'ini giriniz",
+    "u-about":"Hakkımda",
+    "u-n-pass":"Yeni Parola",
+    "a-title":"Makale Başlığı",
+    "a-desc":"Bu makale ne hakkında?",
+    "a-content":"Makalenizi buraya yazabilirsiniz",
+    "a-tags":"Etiketleri giriniz",
+    "delete-c":"Yorumu Sil"
 
 
   }

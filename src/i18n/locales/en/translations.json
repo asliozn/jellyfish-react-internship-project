@@ -28,6 +28,14 @@
     "u-settings":"Update Profile",
     "f-articles":"Favorite Articles",
     "m-articles":"My Articles",
-    "l-page":"Go to login page"
+    "l-page":"Go to login page",
+    "u-pic":"URL of your profile picture",
+    "u-bio":"Your bio",
+    "u-n-pass":"New Password",
+    "a-title":"Article Title",
+    "a-content":"Write your article (in markdown)",
+    "a-tags":"Enter Tags",
+    "a-desc":"What's this article about?",
+    "delete-c":"Delete Comment"
 
   }
