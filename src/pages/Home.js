@@ -225,7 +225,7 @@ const Home = () => {
                             ))}   
                             </article>
                             ):(
-                             <article style={{clear: 'both'}}>
+                            <article style={{clear: 'both'}}>
 
                             { articleList?.map(article => (
                                 <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
@@ -250,11 +250,7 @@ const Home = () => {
 
                                 <div style={{display:'flex', justifyContent:'right'}}>
                                 <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5"}} size='small' variant="outlined" startIcon={<FavoriteIcon className="icon" fontSize="small" /> } onClick={() => { favoriteHandler(article.slug)}} >
-
                                      {article.favoritesCount}</Button>
-
-                                    
-                               
                                      <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5",marginLeft:'2%'}} size='small'variant="outlined"  onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" fontSize="small" /></Button>
                                 </div>

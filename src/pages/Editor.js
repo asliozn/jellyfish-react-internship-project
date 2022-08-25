@@ -39,7 +39,7 @@ const Editor = () => {
 
 return (
   <Formik
-  initialValues={{title: "", body: "", description: ""}}
+  initialValues={{title: "", body: "", description: "", tags: []}}
   onSubmit={registerHandler}
 
 validationSchema={Yup.object().shape({
@@ -81,7 +81,7 @@ validationSchema={Yup.object().shape({
         onBlur={handleBlur}
         className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
 
-        placeholder={articleSlug?(`${article?.title}`):('Article Title')}
+        placeholder={articleSlug?(`${article?.title}`):(t('a-title'))}
         />
 
          {errors.title && touched.title && (
@@ -91,7 +91,7 @@ validationSchema={Yup.object().shape({
 
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
       <Form.Control type="text" 
-      placeholder={articleSlug?(`${article?.description}`):("What's this article about?" )}
+      placeholder={articleSlug?(`${article?.description}`):(t('a-desc'))}
       name="description"
         value={values.description}
         className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
@@ -105,7 +105,7 @@ validationSchema={Yup.object().shape({
       
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
       <Form.Control as="textarea" rows={3} type="text" 
-         placeholder={articleSlug?(`${article?.body}`):("Write your article (in markdown)")} 
+         placeholder={articleSlug?(`${article?.body}`):(t('a-content'))} 
         name="body"
         className={'form-control mt-1 ${errors.username && touched.username && "error"}'}
         value={values.body}
@@ -118,7 +118,10 @@ validationSchema={Yup.object().shape({
       </Form.Group>
       
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-      <Form.Control type="text" placeholder= {articleSlug?(`${article?.tagList}`):("Enter Tags") } />
+      <Form.Control type="text" placeholder= {articleSlug?(`${article?.tagList}`):(t('a-tags')) } name="tags"
+        value={values.tags} 
+        onChange={handleChange} 
+      />
       </Form.Group>
       
       <Button variant="primary" type="submit" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}>
