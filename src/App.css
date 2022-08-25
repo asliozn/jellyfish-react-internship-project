@@ -86,7 +86,7 @@
     align-items: center;
     position: relative;
     padding: 0.5rem 0rem;
-    background-color: #fff;
+    background-color: var(--color-primary);
     color: black;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -329,5 +329,32 @@
   color:   #6963AD   ;
 }
 
+.theme-light {
+  --color-primary: white;
+  --tag-div-color: #F1EAF6;
+
+
+}
+.theme-dark {
+  --color-primary: #474371;
+  --font-color:#eee;
+  --tag-div-color:#AA86D5;
+
+}
+
+.h-tags{
+  background-color:  var(--tag-div-color) ;
+  width:  100%   ;
+  text-align:  center   ;
+  padding-bottom:  15px   ;
+   color:   #6963AD  ;
+   margin-top:  5% ; 
+   border-radius:  10px   ;
+}
+
+.app-style {
+  background-color: var(--color-primary);
+  color: var(--font-color);
+}
 
 

@@ -328,8 +328,7 @@ const Home = () => {
             </Col>
             
             <Col md={3} sm={12} xs={12} >
-                <div style={{backgroundColor:'#F1EAF6',width:'100%',textAlign:'center',paddingBottom:'15px',
-                color: '#6963AD', marginTop:'5%'}}>
+                <div className="h-tags">
                     <h6>{t('p-tags')}</h6>
 
                    {tagList?.map(tags => (  

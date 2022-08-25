@@ -24,9 +24,20 @@ function App() {
   dispatch(fetchTags());
   }, []);
 
+  const themeHandler = () => {
+    const theme = localStorage.getItem('theme');
+    if(theme === 'theme-dark'){
+      document.documentElement.className = 'theme-dark';
+    }else{
+      document.documentElement.className = 'theme-light';
+    }
+  }
+
+  themeHandler();
+
   
 return (
-    <>
+    < div className='app-style'>
             <Routes> 
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -42,7 +53,7 @@ return (
             </Routes>
           
           <JellyFooter />
-     </>
+     </div>
     
   );
 }
