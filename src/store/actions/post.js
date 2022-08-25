@@ -75,6 +75,7 @@ export const createArticle = (values) =>async (dispatch) => {
           "title": values.title,
           "description": values.description,
           "body": values.body,
+          "tagList": values.tags
         }
     }
     try {
