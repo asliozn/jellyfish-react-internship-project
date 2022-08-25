@@ -8,7 +8,7 @@ export const fetchCommentsBySlug = (slug) => async (dispatch) => {
         headers: { Authorization: `Bearer ${user.token}`}
       }
     try {
-        const res = await axios.get(`https://api.realworld.io/api/articles/${slug}/comments`,'',config);
+        const res = await axios.get(`https://api.realworld.io/api/articles/${slug}/comments`,config);
         const data = await res.data;
         console.log(data);
         dispatch({
@@ -26,10 +26,16 @@ export const addComment = (slug, comment) => async (dispatch) => {
     const config = {
         headers: { Authorization: `Bearer ${user.token}`}
       }
+      const payload1 = {
+        "comment": {
+            "body": comment,
+          }
+      
+    }
     try {
-        const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/comments`, comment,config);
+        const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/comments`, payload1,config);
         const data = await res.data;
-        console.log(comment);
+        console.log(data);
 
         dispatch({
             type: types.ADD_COMMENT,
@@ -42,8 +48,16 @@ export const addComment = (slug, comment) => async (dispatch) => {
 
 export const deleteComment = (slug, id) => async (dispatch) => {
 
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}`}
+      }
+
+    console.log(slug, id);
+
     try {
-        const res = await axios.delete(`https://api.realworld.io/api/articles/${slug}/comments/${id}`);
+        const res = await axios.delete(`https://api.realworld.io/api/articles/${slug}/comments/${id}`,config);
         const data = await res.data;
         console.log(data);
         dispatch({

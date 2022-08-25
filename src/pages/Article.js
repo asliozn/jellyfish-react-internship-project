@@ -8,7 +8,7 @@ import Navbarjelly from '../components/Navbarjelly';
 import { useParams , Link,useNavigate} from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux';
 import {fetchArticle} from '../store/actions/article';
-import { fetchCommentsBySlug,addComment} from '../store/actions/comment';
+import { fetchCommentsBySlug,addComment,deleteComment} from '../store/actions/comment';
 import {Alert} from 'react-bootstrap';
 import { likeArticle } from '../store/actions/post';
 import {deleteArticle} from '../store/actions/article';
@@ -40,19 +40,25 @@ const Article = () => {
         const [value, setValue] = useState();        
         const [success, setSuccess] = React.useState(false);
 
-        const onInput = ({target:{value}}) => setValue(value);
+        const onInput = ({target:{value}} ) => setValue(value);
 
         const handleSubmit = (event) => {
             const form = event.currentTarget;
-            if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
+
+            if (form.checkValidity() === false) {
+            event.stopPropagation();
+            event.preventDefault();
             }
             setValidated(true);
             console.log(value);
             dispatch(addComment(articleSlug, value));
             setSuccess(true);
         };
+
+        if (success) {
+            dispatch(fetchCommentsBySlug(articleSlug));
+        }
 
         const followHandler = (event) => {
             user? (console.log("Followed")): navigate('/login');
@@ -69,6 +75,16 @@ const Article = () => {
             }, 1500);
             
         }
+
+        const commentDeleteHandler = (commentID) => {
+            const comID=commentID;
+            console.log(comID);
+            dispatch(deleteComment(articleSlug, comID));
+            setTimeout(function () {
+                dispatch(fetchCommentsBySlug(articleSlug));
+            } , 1000);
+        }
+
 
 
     return (
@@ -216,8 +232,13 @@ const Article = () => {
                                     display: 'block'}}>
                                     {comment.createdAt}</span>
                                 </div>
+
+                                {comment.author.username === user?.username ? (<span>
+                                <Button variant="outline-danger" size='sm' style={{marginRight:'1rem',marginTop:'1rem',float:'right'}} onClick={() => { commentDeleteHandler(comment.id)}}> {t('delete-c')}</Button>
+                            </span> ):(null)}
                             </div>
                             <p>{comment.body}</p>
+   
                         </div>
                     ))}
                 </div>
