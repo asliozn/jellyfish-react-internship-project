@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbarjelly from "../components/Navbarjelly";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getCurrentUser} from "../store/actions/user";
 import {getProfile} from "../store/actions/profile";
@@ -15,6 +15,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import {followUser,unfollowUser} from "../store/actions/profile";
 import { getArticlesByFavorited } from "../store/actions/post";
 import { useTranslation } from "react-i18next";
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 const ProfilePage = () => {
         
@@ -24,7 +28,9 @@ const ProfilePage = () => {
         const { t } = useTranslation();
 
         const [favPage, setFavPage] = React.useState(false);
+        const [show, setShow] = React.useState(false);
 
+        const navigate = useNavigate();
 
         const user1 = JSON.parse(localStorage.getItem('user'));
         const userArticles1 = JSON.parse(localStorage.getItem("articles"));
@@ -35,7 +41,8 @@ const ProfilePage = () => {
         const dispatch = useDispatch();
         
         useEffect(() => {
-                dispatch(getCurrentUser(user1));
+
+               user1? (dispatch(getCurrentUser(user1))): (console.log("no user"));
                 dispatch(getProfile(userID));
 
                 userID === user1?.username ? (
@@ -64,11 +71,15 @@ const ProfilePage = () => {
             const articles = useSelector(state =>  state.post.posts.articles);
 
             const followHandler = (profileUsername) => {
-               user1? (dispatch(followUser(profileUsername))): (alert('Please login to follow this user'));
+               if(user1) {
+                dispatch(followUser(profileUsername)) 
+                setShow(true);
+            }
+               else{navigate("/login");}
                 console.log(profileUsername);
             }
             const unfollowHandler = (profileUsername) => {
-                user1? (dispatch(unfollowUser(profileUsername))): (alert('Please login to unfollow this user'));
+                user1? (dispatch(unfollowUser(profileUsername))): (navigate("/login"));
             }
       
             
@@ -216,9 +227,33 @@ const ProfilePage = () => {
                             <img src={profile?.image} className='profile-page-image-style' alt="profile picture" />
                                 <h4>{profile?.username}</h4>
                                 <p>{profile?.bio}</p>  
-                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { followHandler(profile?.username)}}>{t('follow')}</Button>
-                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
 
+
+                                <Collapse in={show}>
+                                    <Alert style={{width:'30%',marginBottom:'1%',float:"right"}} 
+                                    action={
+                                        <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                            setShow(false);
+                                        }}
+                                        >
+                                        <CloseIcon fontSize="inherit" />
+                                        </IconButton>
+                                    }
+                                    variant="outlined" severity="success"
+                                    >
+                                        Followed!        
+                                        </Alert>
+                                </Collapse>
+
+
+
+                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} id={"bid"}  onClick={() => { followHandler(profile?.username)}}>{t('follow')}</Button>
+                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
+                           
                         </div>
                     </div>
                 </div>
@@ -282,26 +317,46 @@ const ProfilePage = () => {
             ) : (
 
             <>
-
             <div className="user-container" style={{color: '#6963AD',marginBottom: '2%'}}>
                         <div className="row">
                             <div className="col-md-12">
                             <img src={profile?.image} className='profile-page-image-style' alt="profile picture" />
                                 <h4>{profile?.username}</h4>
-                                <p>{profile?.bio}</p>
-                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}}onClick={() => { followHandler(profile?.username)}}>{t('follow')} </Button>
+                                <p>{profile?.bio}</p> 
+                            
+                            <Collapse in={show}>
+                                <Alert
+                                action={
+                                    <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setShow(false);
+                                    }}
+                                    >
+                                    <CloseIcon fontSize="inherit" />
+                                    </IconButton>
+                                }
+                                variant="outlined"
+                                >
+                                    Followed!        
+                                    </Alert>
+                            </Collapse>
+                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} id={"bid"} onClick={() => { followHandler(profile?.username)}}>{t('follow')} </Button>
                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
-
+                         
+                            
                         </div>
                     </div>
                 </div>      
             
-            <p>{t('login-error')}</p>
-            <Link to="/login" className= 'profile-page-anchor'>{t('sign-in')}</Link>
+            <div style={{textAlign:'center'}}>
+            <p style={{color:'red'}}>{t('login-error')}</p>
+            <Link to="/login" className= 'profile-page-anchor'>{t('l-page')}</Link>
+            </div>
             </>
-
-
-                )}
+        )}
 
     </>
     );
