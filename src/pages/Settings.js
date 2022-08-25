@@ -105,7 +105,7 @@ validationSchema={Yup.object().shape({
             value={values.url}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="URL of your profile picture"
+            placeholder={t('u-pic')}
             className={'form-control mt-1 ${errors.url && touched.url && "error"}'}
             />
                 {errors.url && touched.url && (
@@ -130,7 +130,7 @@ validationSchema={Yup.object().shape({
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Control as="textarea" rows={3} type="text" 
-            placeholder={user?.bio}
+            placeholder={user? user?.bio: t('u-about')}
             name="bio"
             className={'form-control mt-1 ${errors.bio && touched.bio && "error"}'}
             value={values.bio}
@@ -156,7 +156,7 @@ validationSchema={Yup.object().shape({
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
             <Form.Control type="password" 
-            placeholder="New Password"
+            placeholder={t('u-n-pass')}
             name="password"
             className={'form-control mt-1 ${errors.password && touched.password && "error"}'}
             value={values.password}
