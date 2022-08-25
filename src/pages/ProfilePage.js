@@ -33,11 +33,9 @@ const ProfilePage = () => {
         const navigate = useNavigate();
 
         const user1 = JSON.parse(localStorage.getItem('user'));
-        const userArticles1 = JSON.parse(localStorage.getItem("articles"));
 
 
        
-
         const dispatch = useDispatch();
         
         useEffect(() => {
@@ -61,6 +59,7 @@ const ProfilePage = () => {
         }
 
         const closeFavPage = () => {
+            dispatch(getArticlesByAuthor(user1.username))
             setFavPage(false);
         }
 
@@ -71,12 +70,12 @@ const ProfilePage = () => {
             const articles = useSelector(state =>  state.post.posts.articles);
 
             const followHandler = (profileUsername) => {
-               if(user1) {
-                dispatch(followUser(profileUsername)) 
-                setShow(true);
-            }
-               else{navigate("/login");}
-                console.log(profileUsername);
+                    if(user1) {
+                        dispatch(followUser(profileUsername)) 
+                        setShow(true);
+                    }
+                    else{navigate("/login");}
+                        console.log(profileUsername);
             }
             const unfollowHandler = (profileUsername) => {
                 user1? (dispatch(unfollowUser(profileUsername))): (navigate("/login"));
@@ -171,46 +170,46 @@ const ProfilePage = () => {
                   ) : (
                     <article style={{borderTop:' 1px solid rgba(0,0,0,0.1)',clear: 'both'}}>
 
-                                { userArticles1?.map(article => (
-                                    <div key={JSON.parse(article).article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
+                    {   articles?.map(article => (
+                        <div key={article.slug} style={{borderTop:' 1px solid rgba(0,0,0,0.1)',padding:'5px'}}>
 
-                                    <div style={{display:'flex', justifyContent:'space-between'}}>
-                                    <div>
-                                    <Link to={`/user/${JSON.parse(article).article.author.username}`} >
-                                    <img src= {JSON.parse(article).article.author.image} className='home-page-image-style' alt="profile" /></Link>
+                        <div style={{display:'flex', justifyContent:'space-between'}}>
+                        <div>
+                        <Link to={`/user/${article.author.username}`} >
+                        <img src= {article.author.image} className='home-page-image-style' alt="profile" /></Link>
 
-                                    
-                                    <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
-                                    <Link to='/user' className='home-page-link-style'>{JSON.parse(article).article.author.username}</Link>
-                                    <span style={{    color: '#bbb',
-                                    fontSize: '0.8rem',
-                                    display: 'block'}}>
-                                            {JSON.parse(article).article.createdAt}</span>
-                                    </div>
-                                    </div>
+                        
+                        <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
+                        <Link to='/user' className='home-page-link-style'>{article.author.username}</Link>
+                        <span style={{    color: '#bbb',
+                        fontSize: '0.8rem',
+                        display: 'block'}}>
+                                {article.createdAt}</span>
+                        </div>
+                        </div>
 
-                                    <Button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}}   variant='outline-secondary' size='sm' >
-                                    <FavoriteIcon sx={{ color:'#AA86D5' }} /> {JSON.parse(article).article.favoritesCount}</Button>
-                                    </div>
-                                    
-
-
-                                    <h5>{JSON.parse(article).article.title}</h5>
-                                    <p style={{color:'grey'}}>{JSON.parse(article).article.description}</p>
+                        <Button style={{float:'right',color:'#AA86D5',borderColor:'#AA86D5'}}   variant='outline-secondary' size='sm' >
+                        <FavoriteIcon sx={{ color:'#AA86D5' }} /> {article.favoritesCount}</Button>
+                        </div>
+                        
 
 
-                                    <div style={{display:'flex', justifyContent:'space-between'}}>  
-                                    <Link to={`/article/${JSON.parse(article).article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >{t('r-more')}</Link>
+                        <h5>{article.title}</h5>
+                        <p style={{color:'grey'}}>{article.description}</p>
 
-                                    <div style={{display:'flex', justifyContent:'right'}}>  
-                                    {JSON.parse(article).article.tagList.map(tag => ( <Link to='/' key={tag.id} className='home-page-tag-style'>{tag}</Link>
-                                    ))}
-                                    </div>                                            
-                                    </div>
 
-                                    </div>
-                                ))}   
-                                </article>
+                        <div style={{display:'flex', justifyContent:'space-between'}}>  
+                        <Link to={`/article/${article.slug}`} style={{color:'#6963AD', float:'left', textDecoration:'none'}} >{t('r-more')}</Link>
+
+                        <div style={{display:'flex', justifyContent:'right'}}>  
+                        {article.tagList.map(tag => ( <Link to='/' key={tag.id} className='home-page-tag-style'>{tag}</Link>
+                        ))}
+                        </div>                                            
+                        </div>
+
+                        </div>
+                    ))}   
+                    </article>
                                 
                                 )}
 
@@ -251,8 +250,10 @@ const ProfilePage = () => {
 
 
 
-                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} id={"bid"}  onClick={() => { followHandler(profile?.username)}}>{t('follow')}</Button>
-                           <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
+                          
+                            <Button size="sm"style={{color:"#AA86D5", borderColor:"#AA86D5",float:"right",marginLeft:'1rem',marginRight:'1rem'}}  variant="outlined"  onClick={() => { followHandler(profile?.username)}}>{t('follow')}</Button>
+                           <Button size="sm" style={{color:"#AA86D5", borderColor:"#AA86D5",float:"right"}}  variant="outlined" onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
+                         
                            
                         </div>
                     </div>
@@ -343,8 +344,9 @@ const ProfilePage = () => {
                                     Followed!        
                                     </Alert>
                             </Collapse>
-                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} id={"bid"} onClick={() => { followHandler(profile?.username)}}>{t('follow')} </Button>
-                          <Button size="sm" style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right'}} onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
+                    
+                            <Button size="sm"style={{color:"#AA86D5", borderColor:"#AA86D5",float:"right",marginLeft:'1rem',marginRight:'1rem'}}  variant="outlined"  onClick={() => { followHandler(profile?.username)}}>{t('follow')}</Button>
+                           <Button size="sm" style={{color:"#AA86D5", borderColor:"#AA86D5",float:"right"}}  variant="outlined" onClick={() => { unfollowHandler(profile?.username)}}>{t('unfollow')} </Button>
                          
                             
                         </div>

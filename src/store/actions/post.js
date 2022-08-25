@@ -96,10 +96,14 @@ export const createArticle = (values) =>async (dispatch) => {
 }
 
 export const getArticlesByAuthor = (username) => async (dispatch) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}`}
+      }
   try {
-      const res = await axios.get(`https://api.realworld.io/api/articles?author=${username}`);
+      const res = await axios.get(`https://api.realworld.io/api/articles?author=${username}`,config);
       const data = await res.data;
-      //console.log(data);
+      console.log(data);
       dispatch({
           type: types.GET_ARTICLES_BY_AUTHOR,
           payload: data
@@ -152,19 +156,13 @@ export const getArticlesByFavorited = (username) => async (dispatch) => {
 }
 
 
-
-
 export const likeArticle = (slug) => async (dispatch) => {
 
     const user = JSON.parse(localStorage.getItem('user'));
  
-    console.log(slug)
-
     const config = {
         headers: { Authorization: `Bearer ${user?.token}`}
       }
-      console.log(config)
-      console.log(user?.token)
     try {
         const res = await axios.post(`https://api.realworld.io/api/articles/${slug}/favorite`,'',config)
         console.log(res.data)

@@ -46,12 +46,12 @@ export default function postReducer(state = initialState, action) {
         case types.LIKE_ARTICLE:
             return {
                 ...state,
-                posts: action.payload
+               // posts: action.payload
             };
         case types.UNLIKE_ARTICLE:
             return {
                 ...state,
-                posts: action.payload
+                //posts: action.payload
             };
         default:
            return {...state,};

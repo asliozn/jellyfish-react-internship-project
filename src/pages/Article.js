@@ -1,4 +1,4 @@
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import React, {useState,useEffect} from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,6 +13,9 @@ import {Alert} from 'react-bootstrap';
 import { likeArticle } from '../store/actions/post';
 import {deleteArticle} from '../store/actions/article';
 import { useTranslation } from 'react-i18next';
+import {followUser,unfollowUser} from "../store/actions/profile";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 
      
 const Article = () => {
@@ -60,8 +63,16 @@ const Article = () => {
             dispatch(fetchCommentsBySlug(articleSlug));
         }
 
-        const followHandler = (event) => {
-            user? (console.log("Followed")): navigate('/login');
+        const followHandler = (articleAuthor) => {
+            if(user) {
+                dispatch(followUser(articleAuthor)) 
+            }
+            else{navigate("/login");}
+                console.log(articleAuthor);
+        }
+
+        const unfollowHandler = (articleAuthor) => {
+            user? (dispatch(unfollowUser(articleAuthor))): (navigate("/login"));
         }
         
         const favoriteHandler = (event) => {
@@ -110,11 +121,14 @@ const Article = () => {
             {article?.author.username === user?.username ? 
             (<span>
                 <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style' > {t('edit')}</Link>
-                <Button variant="outline-danger" size='sm' onClick={() => { deleteHandler(article.slug)}} style={{marginRight:'1rem'}}> {t('delete')}</Button>
+                <Button variant="outlined" color="error" size='small'  onClick={() => { deleteHandler(article.slug)}} style={{marginRight:'1rem'}}> {t('delete')}</Button>
             </span> ):(  
-            <span style={{marginLeft:'2rem'}}>
-                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}> {t('fav')}</button>
-                <button className='article-buttons' onClick={() => { followHandler()}}>{t('follow')}</button>
+           <span style={{marginLeft:'2rem'}}>
+           <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD"}}  startIcon={<FavoriteIcon className="icon" fontSize="small" sx={{color:'#6963AD'}}/> } variant="outlined"  onClick={() => { favoriteHandler(article.favoritesCount)}}>{t('fav')}</Button>
+           
+           <Button size="small"style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined"  onClick={() => { followHandler(article.author.username)}}>{t('follow')}</Button>
+           <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined" onClick={() => { unfollowHandler(article.author.username)}}>{t('unfollow')} </Button>
+                    
             </span>
             )}
 
@@ -153,11 +167,14 @@ const Article = () => {
 
             {article?.author.username === user?.username ? (<span>
                 <Link  to={`/editor/${article?.slug}`} className='article-edit-link-style'> {t('edit')}</Link>
-                <Button variant="outline-danger" size='sm' style={{marginRight:'1rem'}} onClick={() => { deleteHandler(article.slug)}}> {t('delete')}</Button>
+                <Button variant="outlined" color="error" size='small'  style={{marginRight:'1rem'}} onClick={() => { deleteHandler(article.slug)}}> {t('delete')}</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-                <button   className='article-buttons' onClick={() => { favoriteHandler(article.favoritesCount)}}>  {t('fav')}</button>
-                <button className='article-buttons' onClick={() => { followHandler()}}> {t('follow')}</button>
+               <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD"}}  startIcon={<FavoriteIcon className="icon" fontSize="small" sx={{color:'#6963AD'}}/> } variant="outlined"  onClick={() => { favoriteHandler(article.favoritesCount)}}>{t('fav')}</Button>
+           
+               <Button size="small"style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined"  onClick={() => { followHandler(article.author.username)}}>{t('follow')}</Button>
+               <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined" onClick={() => { unfollowHandler(article.author.username)}}>{t('unfollow')} </Button>
+                      
             </span>
             )}
         </div>
@@ -200,7 +217,7 @@ const Article = () => {
                     </Form.Control.Feedback>
                  </Form.Group>
                  <Button variant="primary" type="submit" 
-                 style={{backgroundColor:'#6963AD', borderColor:'#6963AD', float:'right', marginBottom:'2%'}}>
+                 sx={{backgroundColor:'#6963AD', color:'white',borderColor:'#6963AD', float:'right', marginBottom:'2%'}}>
                    {t('p-comment')}
                 </Button>
                 </Form>
@@ -223,10 +240,10 @@ const Article = () => {
                     {comments?.map(comment => (
                         <div style={{border: '1px solid #e5e5e5'}}key={comment.id}>
                             <div>
-                                <Link to='/user'><img
+                                <Link to={`/user/${comment.author.username}`}><img
                                 src={comment?.author.image}  className='home-page-image-style' alt="profile" /></Link>
                                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>
-                                <Link to='/user' className='home-page-link-style'>{comment.author.username}</Link>
+                                <Link to={`/user/${comment.author.username}`} className='home-page-link-style'>{comment.author.username}</Link>
                                 <span style={{    color: '#bbb',
                                 fontSize: '0.8rem',
                                     display: 'block'}}>
@@ -234,7 +251,7 @@ const Article = () => {
                                 </div>
 
                                 {comment.author.username === user?.username ? (<span>
-                                <Button variant="outline-danger" size='sm' style={{marginRight:'1rem',marginTop:'1rem',float:'right'}} onClick={() => { commentDeleteHandler(comment.id)}}> {t('delete-c')}</Button>
+                                <Button variant="outlined" color="error" size='small' style={{marginRight:'1rem',marginTop:'1rem',float:'right'}} onClick={() => { commentDeleteHandler(comment.id)}}> {t('delete-c')}</Button>
                             </span> ):(null)}
                             </div>
                             <p>{comment.body}</p>

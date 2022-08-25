@@ -14,6 +14,7 @@ import {fetchTags} from './store/actions/tags';
 import JellyFooter from './components/footer';
 
 
+
 function App() {
 
   const dispatch = useDispatch();
@@ -26,23 +27,21 @@ function App() {
   
 return (
     <>
+            <Routes> 
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<SignUp />} />
+              <Route path="/editor" element={<Editor />}>
+                <Route path="/editor/:articleSlug" element={<Editor />} />
+              </Route>
 
-    <Routes> 
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<SignUp />} />
-      <Route path="/editor" element={<Editor />}>
-        <Route path="/editor/:articleSlug" element={<Editor />} />
-      </Route>
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/user/:userID" element={<ProfilePage />} />
+              <Route path="/article/:articleSlug" element={<Article />} />
 
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/user/:userID" element={<ProfilePage />} />
-      <Route path="/article/:articleSlug" element={<Article />} />
-
-    </Routes>
-   
-   <JellyFooter />
-    
+            </Routes>
+          
+          <JellyFooter />
      </>
     
   );

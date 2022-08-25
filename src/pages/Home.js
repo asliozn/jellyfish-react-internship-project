@@ -12,6 +12,7 @@ import {fetchTags} from '../store/actions/tags';
 import {fetchPosts,getFollowFeed,fetchPostsByTag,likeArticle, unlikeArticle } from '../store/actions/post';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
+import { Alert } from "react-bootstrap";
 
 const Home = () => {
 
@@ -40,26 +41,24 @@ const Home = () => {
     const [followPage, setFollowPage] = React.useState(false);
 
 
-
     const favoriteHandler = (slug) => {
         
         if(user){
                     console.log("like");
                     dispatch(likeArticle(slug));
-                    navigate('/');
-                
-        }
+                    dispatch(fetchPosts());
+                      }
         else{
         navigate('/login');
         }
     }
+
     const unfavoriteHandler = (slug) => {
         
         if(user){
                     console.log("unlike");
                     dispatch(unlikeArticle(slug));
-                    navigate('/');
-
+                    dispatch(fetchPosts());
         
         }
         else{
@@ -146,14 +145,13 @@ const Home = () => {
                                 </div>
                                 </div>
 
-                                <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5"}} size='small' variant="outlined" startIcon={<FavoriteIcon className="icon" fontSize="small" /> } onClick={() => { favoriteHandler(article.slug)}} >
-
+                                <div style={{display:'flex', justifyContent:'right'}}>
+                                <Button sx={{ color:"#AA86D5", borderColor:"#AA86D5"}} size='small' variant="outlined" startIcon={<FavoriteIcon className="icon" fontSize="small" /> } onClick={() => { favoriteHandler(article.slug)}} >
                                  {article.favoritesCount}</Button>
 
-
-                               
                                  <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5",marginLeft:'2%'}} size='small'variant="outlined"  onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" fontSize="small" /></Button>
+                                </div>
                                 </div>
                                 
 
@@ -204,14 +202,13 @@ const Home = () => {
                                 <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5"}} size='small' variant="outlined" startIcon={<FavoriteIcon className="icon" fontSize="small" /> } onClick={() => { favoriteHandler(article.slug)}} >
 
                                      {article.favoritesCount}</Button>
-
                                 
-                                     <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5",marginLeft:'2%'}} size='small'variant="outlined"  onClick={() => { unfavoriteHandler(article.slug)}} >
+                                
+                                <Button  sx={{color:"#AA86D5", borderColor:"#AA86D5",marginLeft:'2%'}} size='small'variant="outlined"  onClick={() => { unfavoriteHandler(article.slug)}} >
                                 <HeartBrokenIcon className="icon" fontSize="small" /></Button>
 
                                 </div>
                                 </div>
-
                                 <h5>{article.title}</h5>
                                 <p style={{color:'grey'}}>{article.description}</p>
 
