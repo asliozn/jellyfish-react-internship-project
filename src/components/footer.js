@@ -24,8 +24,8 @@ const JellyFooter = () => {
                     </Dropdown.Toggle>
     
                     <Dropdown.Menu>
-                      <Dropdown.Item ><button onClick={changeLanguage} value='en'>English</button></Dropdown.Item>
-                      <Dropdown.Item > <button onClick={changeLanguage} value='tr'>Türkçe</button></Dropdown.Item>
+                      <Dropdown.Item ><button onClick={changeLanguage} value='en' className="footer-button">English</button></Dropdown.Item>
+                      <Dropdown.Item > <button onClick={changeLanguage} value='tr' className="footer-button">Türkçe</button></Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
         </footer>

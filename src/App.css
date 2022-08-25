@@ -306,6 +306,8 @@
 
 }
 
+
+
 .profile-p-button:hover{
   color:   white   ;
   background: #AA86D5;
@@ -321,6 +323,11 @@
   color : #AA86D5 ;
 }
 
+.footer-button{
+  border:none;
+  background:none;
+  color:   #6963AD   ;
+}
 
 
 
