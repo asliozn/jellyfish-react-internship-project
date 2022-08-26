@@ -5,10 +5,13 @@ import * as types from './types';
 export const fetchCommentsBySlug = (slug) => async (dispatch) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const config = {
-        headers: { Authorization: `Bearer ${user.token}`}
+        headers: { Authorization: `Bearer ${user?.token}`}
       }
+    
+
+
     try {
-        const res = await axios.get(`https://api.realworld.io/api/articles/${slug}/comments`,config);
+        const res = await axios.get(`https://api.realworld.io/api/articles/${slug}/comments`, user? config:null);
         const data = await res.data;
         console.log(data);
         dispatch({

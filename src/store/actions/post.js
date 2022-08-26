@@ -75,16 +75,12 @@ export const createArticle = (values) =>async (dispatch) => {
           "title": values.title,
           "description": values.description,
           "body": values.body,
-          "tagList": values.tags
+          "tagList": [values.tags]
         }
     }
     try {
         const response = await axios.post('https://api.realworld.io/api/articles', payload1,config)
         console.log(response.data.article);
-        console.log(localStorage.getItem('articles'));
-        addItem(response);
-        console.log(localStorage.getItem('articles'));
-
         dispatch({
             type: types.CREATE_ARTICLE,
             payload: response.data

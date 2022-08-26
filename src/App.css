@@ -12,7 +12,7 @@
     padding-top: 30px;
     padding-bottom: 20px;
     border-radius: 8px;
-    background-color: white;
+    background-color: var(--primary-color);
   }
   
   .Auth-form-content {
@@ -201,7 +201,7 @@
   }
 
 .article-banner-style {
-    background-color:  #7a76abbf  ;
+    background-color:  #c5ace2  ;
     background-position:  center  ;
     height:  25vh  ;
     width:  100%  ;
@@ -332,6 +332,7 @@
 .theme-light {
   --color-primary: white;
   --tag-div-color: #F1EAF6;
+  --button-color: #6963AD;
 
 
 }
@@ -339,6 +340,7 @@
   --color-primary: #474371;
   --font-color:#eee;
   --tag-div-color:#AA86D5;
+  --button-color: white;
 
 }
 
@@ -352,9 +354,29 @@
    border-radius:  10px   ;
 }
 
+.a-h-button{
+ color:var(--button-color);
+ border-color: var(--button-color);
+ margin-left:1rem
+}
+
 .app-style {
   background-color: var(--color-primary);
   color: var(--font-color);
 }
 
+.comment-container{
+  display: flex;
+  justify-content: center;
+}
 
+.footer-style{
+  position: fixed;
+  bottom:0;
+  right:0;
+  background-color: var(--color-primary);
+}
+
+.fixer{
+  color:var(--color-primary)
+}

@@ -46,7 +46,7 @@ export const unfollowUser = (username) => async (dispatch) =>{
                 headers: { Authorization: `Bearer ${user.token}`,}
             }
             try {
-                    const res = await axios.delete(`https://api.realworld.io/api/profiles/${username}/follow`, '',config);
+                    const res = await axios.delete(`https://api.realworld.io/api/profiles/${username}/follow`,config);
                     const data = res.data;
                         dispatch({  
                             type: types.UNFOLLOW_USER,

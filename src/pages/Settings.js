@@ -136,6 +136,7 @@ validationSchema={Yup.object().shape({
             value={values.bio}
             onChange={handleChange}
             onBlur={handleBlur} />
+
             {errors.bio && touched.bio && (
             <div className="input-feedback" style={{color:'red'}}>{errors.bio}</div>
             )}
@@ -176,6 +177,33 @@ validationSchema={Yup.object().shape({
         {t('sign-out')} </Button>
 
         </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div  className="fixer">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br /> 
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br /> 
+        </div>
+
         </>
     ); } }
     </Formik>

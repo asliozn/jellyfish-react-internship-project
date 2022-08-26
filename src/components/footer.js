@@ -26,7 +26,7 @@ const JellyFooter = () => {
   }
 
     return (
-        <footer style={{position: 'fixed',bottom:'0',right:'0'}}>
+        <footer className="footer-style">
         <Dropdown >
                     <Dropdown.Toggle style={{background:'none',border:'none'}} variant="success" id="dropdown-basic">
                     <LanguageIcon  style={{color:'#6963AD'}} />

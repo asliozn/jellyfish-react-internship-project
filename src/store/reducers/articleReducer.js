@@ -27,6 +27,11 @@ export default function articleReducer(state = initialState, action) {
                 ...state,
                 article: action.payload
             };
+        case types.EDIT_ARTICLE:
+            return {
+                ...state,
+                article: action.payload
+            };
         default:
             return {...state,};
     }

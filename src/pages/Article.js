@@ -16,8 +16,6 @@ import { useTranslation } from 'react-i18next';
 import {followUser,unfollowUser} from "../store/actions/profile";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-
-     
 const Article = () => {
 
     const user = JSON.parse(localStorage.getItem('user'));
@@ -98,6 +96,7 @@ const Article = () => {
 
 
 
+
     return (
         <>
         <Navbarjelly />
@@ -111,7 +110,7 @@ const Article = () => {
                 
                 <div style={{display: 'inline-block', verticalAlign: 'middle',}}>   
                 <Link to={`/user/${article?.author.username}`}  className='home-page-link-style'>{article?.author.username}</Link>
-                <span style={{    color: '#bbb',
+                <span style={{    color: 'grey',
                 fontSize: '0.8rem',
                 display: 'block'}}>  
                         {article?.createdAt}
@@ -124,11 +123,11 @@ const Article = () => {
                 <Button variant="outlined" color="error" size='small'  onClick={() => { deleteHandler(article.slug)}} style={{marginRight:'1rem'}}> {t('delete')}</Button>
             </span> ):(  
            <span style={{marginLeft:'2rem'}}>
-           <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD"}}  startIcon={<FavoriteIcon className="icon" fontSize="small" sx={{color:'#6963AD'}}/> } variant="outlined"  onClick={() => { favoriteHandler(article.favoritesCount)}}>{t('fav')}</Button>
+           <Button size="small" sx={{color: "#6963AD", borderColor: "#6963AD"}}  startIcon={<FavoriteIcon className="icon" fontSize="small" sx={{color:'#6963AD'}}/> } variant="outlined"  onClick={() => { favoriteHandler(article.favoritesCount)}}>{t('fav')}</Button>
            
-           <Button size="small"style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined"  onClick={() => { followHandler(article.author.username)}}>{t('follow')}</Button>
-           <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined" onClick={() => { unfollowHandler(article.author.username)}}>{t('unfollow')} </Button>
-                    
+           <Button size="small" sx={{color:"#6963AD", borderColor:"#6963AD"}}  variant="outlined"  onClick={() => { followHandler(article.author.username)}}>{t('follow')}</Button>
+            <Button size="small"  sx={{color:"#6963AD", borderColor:"#6963AD"}} variant="outlined" onClick={() => { unfollowHandler(article.author.username)}}>{t('unfollow')} </Button>
+                      
             </span>
             )}
 
@@ -170,10 +169,10 @@ const Article = () => {
                 <Button variant="outlined" color="error" size='small'  style={{marginRight:'1rem'}} onClick={() => { deleteHandler(article.slug)}}> {t('delete')}</Button>
             </span> ):(  
             <span style={{marginLeft:'2rem'}}>
-               <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD"}}  startIcon={<FavoriteIcon className="icon" fontSize="small" sx={{color:'#6963AD'}}/> } variant="outlined"  onClick={() => { favoriteHandler(article.favoritesCount)}}>{t('fav')}</Button>
+               <Button size="small" sx={{color:"#6963AD", borderColor:"#6963AD"}}  startIcon={<FavoriteIcon className="icon" fontSize="small" sx={{color:'#6963AD'}}/> } variant="outlined"  onClick={() => { favoriteHandler(article.favoritesCount)}}>{t('fav')}</Button>
            
-               <Button size="small"style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined"  onClick={() => { followHandler(article.author.username)}}>{t('follow')}</Button>
-               <Button size="small" style={{color:"#6963AD", borderColor:"#6963AD",marginLeft:'1rem'}}  variant="outlined" onClick={() => { unfollowHandler(article.author.username)}}>{t('unfollow')} </Button>
+               <Button size="small"  sx={{color:"#6963AD", borderColor:"#6963AD"}}   variant="outlined"  onClick={() => { followHandler(article.author.username)}}>{t('follow')}</Button>
+               <Button size="small"  sx={{color:"#6963AD", borderColor:"#6963AD"}}   variant="outlined" onClick={() => { unfollowHandler(article.author.username)}}>{t('unfollow')} </Button>
                       
             </span>
             )}
@@ -233,7 +232,7 @@ const Article = () => {
         )}
         
                 
-                <div style={{display: 'flex',justifyContent: 'center',}} >
+                <div className='comment-container'>
 
                     <div style={{display: 'flex', flexDirection: 'column',justifyContent: 'space-between', padding: '1rem',}}>
 

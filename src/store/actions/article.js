@@ -34,5 +34,23 @@ export const deleteArticle = (slug) => async (dispatch) => {
     }
 }
 
+export const editArticle = (values,slug) => async (dispatch) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const config = {
+        headers: { Authorization: `Bearer ${user?.token}`}
+    }
+    try {
+        const res = await axios.put(`https://api.realworld.io/api/articles/${slug}`,values,config)
+        console.log(res.data)
+        dispatch({
+            type: types.EDIT_ARTICLE,
+            payload: res.data
+        });
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
 
 
