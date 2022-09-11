@@ -13,5 +13,5 @@ npm start
 ```
 
 ## How should the project look like
-(![Ekran Görüntüsü (460)](https://user-images.githubusercontent.com/61664198/189546557-a1e1b585-631e-4f52-9964-62ac852538bf.png)
+![Ekran Görüntüsü (460)](https://user-images.githubusercontent.com/61664198/189546557-a1e1b585-631e-4f52-9964-62ac852538bf.png)
 
