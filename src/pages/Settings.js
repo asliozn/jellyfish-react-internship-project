@@ -60,7 +60,7 @@ const Settings = () => {
 
 return(
   <Formik
-    initialValues={{ email: "", password: "" , username: "",bio:"",url:""}}
+    initialValues={{ email: "asli@hotmail.com", password: "" , username: "",bio:"",url:""}}
     onSubmit={registerHandler}
 
 validationSchema={Yup.object().shape({
